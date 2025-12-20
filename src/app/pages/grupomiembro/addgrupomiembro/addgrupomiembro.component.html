@@ -1,0 +1,15 @@
+<div class="form-grupo">
+    <form [formGroup]="grupoMiembroForm" (ngSubmit)="guardarGrupo()" class="form-grupo__form">
+        <mat-form-field class="form-grupo__field">
+            <mat-label>Nombre de grupo miembro</mat-label>
+            <input matInput formControlName="nombredelgrupo" required="required" />
+        </mat-form-field>
+        <mat-form-field class="form-grupo__field">
+            <mat-label>Fecha de creación</mat-label>
+            <input matInput [matDatepicker]="datepicker" formControlName="fechacreacion">
+            <mat-datepicker #datepicker />
+            <mat-datepicker-toggle [for]="datepicker" matSuffix />
+        </mat-form-field>
+        <button [disabled]="grupoMiembroForm.invalid" class="form__btn--save">Guardar</button>
+    </form>
+</div>

@@ -1,0 +1,163 @@
+<div class="students">
+    <div class="students__title">
+        <h2>Estudiantes</h2>
+        <div class="students__actions">
+            <button class="student__action student__button_export" (click)="exportarExcel()">
+                <mat-icon>file_download</mat-icon>
+                <span>Exportar a Excel</span>
+            </button>
+            <button class="student__action student__button_add" (click)="abrirFormEstudiante()">
+                <mat-icon>person_add_alt_1</mat-icon>
+                <span>Agregar nuevo estudiante</span>
+            </button>
+        </div>
+    </div>
+    <div class="students__filters">
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+            <mat-button-toggle [checked]="filterValue === 'all'"
+                (click)="aplicarfiltro('all')">Todos</mat-button-toggle>
+            <mat-button-toggle (click)="aplicarfiltro('solo-miembros')">Ver solo miembros</mat-button-toggle>
+            <mat-button-toggle (click)="aplicarfiltro('no-miembros')">ver solo no miembros</mat-button-toggle>
+        </mat-button-toggle-group>
+        <div>
+             <button class="estudents__filters-refresh"  (click)="obtenerListaEstudiantes()" >
+                <mat-icon>refresh</mat-icon>
+            </button>
+            <mat-form-field>
+                <mat-label>Buscar estudiante</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Mia" #input>
+            </mat-form-field>
+        </div>
+
+    </div>
+    <div class="students__table">
+        <div class="mat-elevation-z8">
+            @if (cargando==true) {
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <p class="loading-spinner__text">Cargando...</p>
+            </div>
+            }
+            @else {
+            <table mat-table [dataSource]="dataEstudiante" matSort>
+                <ng-container matColumnDef="nro">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nro </th>
+                    <td mat-cell *matCellDef="let estudiante, let i = index"> {{i + 1}} </td>
+                </ng-container>
+                <ng-container matColumnDef="dni">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> DNI </th>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.dni}} </td>
+                </ng-container>
+                <ng-container matColumnDef="nombres">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombres </th>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.nombres}} </td>
+                </ng-container>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="apellidos">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </th>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.apellidos}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="celular">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Celular </th>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.celular}} </td>
+                </ng-container>
+
+                <!-- Fruit Column -->
+                <ng-container matColumnDef="correo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo </th>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.correo}} </td>
+                </ng-container>
+                <ng-container matColumnDef="fechanac">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Nacimiento </th>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.fechadenacimiento | date:'dd/MM/yyyy'}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="direccion">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Direccion </th>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.direccion}} </td>
+                </ng-container>
+                <ng-container matColumnDef="estado">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.estado}} </td>
+                </ng-container>
+                <ng-container matColumnDef="fecharegistro">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Fec. registro</th>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.fecharegistro | date:'dd/MM/yyyy'}} </td>
+                </ng-container>
+                <ng-container matColumnDef="esmiembro">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Es miembro? </th>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.esmiembro? 'SI':'No' }} </td>
+                </ng-container>
+                <ng-container matColumnDef="fechaasignacionmiembro">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Miembro desde </th>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.fechaasignacionmiembro | date:'dd/MM/yyyy'}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="grupo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Grupo</th>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.grupo}} </td>
+                </ng-container>
+                <ng-container matColumnDef="area">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Area</th>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.area}} </td>
+                </ng-container>
+                <ng-container matColumnDef="cargo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Cargo</th>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.cargo}} </td>
+                </ng-container>
+                <ng-container matColumnDef="fechaultmodificacion">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Ult. Modificacion</th>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.fechadeultimaactualizacion |
+                        date:'dd/MM/yyyy HH:mm'}} </td>
+                </ng-container>
+                <ng-container matColumnDef="tiempodemiembro">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Tiempo de Miembro</th>
+                    <td mat-cell *matCellDef="let estudiante">
+                        {{calcularTiempoMiembro(estudiante.fechaasignacionmiembro)}} </td>
+                </ng-container>
+                <ng-container matColumnDef="detalle1">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> detalle 1</th>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.detalle1}} </td>
+                </ng-container>
+                <ng-container matColumnDef="detalle2">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> detalle 2</th>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.detalle2}} </td>
+                </ng-container>
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column-acciones-sticky">
+                        Acciones
+                    </th>
+                    <td mat-cell *matCellDef="let estudiante" class="acciones-cell mat-column-acciones-sticky">
+                        <div class="acciones-contenedor">
+                            <button (click)="eliminarEstudiante(estudiante.dni)" mat-icon-button color="warn"
+                                aria-label="delete">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                            <button (click)="abrirFormEstudiante(estudiante)" mat-icon-button color="primary"
+                                aria-label="update">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="5">No se encontraron datos con: "{{input.value}}"</td>
+                </tr>
+
+            </table>
+            }
+        </div>
+    </div>
+    <mat-paginator [pageSizeOptions]="[ 5, 10, 50]" aria-label="Select page of users"></mat-paginator>
+
+
+
+</div>

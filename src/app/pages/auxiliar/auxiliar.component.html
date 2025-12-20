@@ -1,0 +1,65 @@
+<div class="auxiliar">
+    <div class="auxiliar__title">
+        <mat-card appearance="outlined">
+            <mat-card-header>
+                <mat-card-title>Configuracion de datos</mat-card-title>
+            </mat-card-header>
+            <br>
+        </mat-card>
+
+    </div>
+    <div class="auxiliar__sub-items">
+        <div class="config-container">
+            <div class="config-grid">
+                <button (click)="irAPeriodo()">
+                    <div class="config-card">
+                        <div class="card-icon" style="background: #3b82f6;">
+                            <mat-icon>calendar_month</mat-icon>
+                        </div>
+                        <h2 class="card-title">Periodos</h2>
+                        <p class="card-description">Gestiona los periodos académicos del sistema</p>
+                    </div>
+                </button>
+                <button (click)="irAArea()">
+                    <div class="config-card">
+                        <div class="card-icon" style="background: #8b5cf6;">
+                            <mat-icon>grid_view</mat-icon>
+                        </div>
+                        <h2 class="card-title">Áreas</h2>
+                        <p class="card-description">Administra las áreas y departamentos</p>
+                    </div>
+                </button>
+
+                <button (click)="irACargo()">
+                    <div class="config-card">
+                        <div class="card-icon" style="background: #ec4899;">
+                            <mat-icon>wallet_travel</mat-icon>
+                        </div>
+                        <h2 class="card-title">Cargos</h2>
+                        <p class="card-description">Define los cargos y roles del personal</p>
+                    </div>
+                </button>
+                <button (click)="irAGrupoMiembro()">
+                    <div class="config-card">
+                        <div class="card-icon" style="background: #10b981;">
+                            <mat-icon>group</mat-icon>
+                        </div>
+                        <h2 class="card-title">Grupo Miembros</h2>
+                        <p class="card-description">Organiza los grupos de miembros</p>
+                    </div>
+                </button>
+                <button (click)="irAMetodoPago()">
+                    <div class="config-card">
+                        <div class="card-icon" style="background: #f59e0b;">
+                            <mat-icon>credit_card</mat-icon>
+                        </div>
+                        <h2 class="card-title">Método de Pago</h2>
+                        <p class="card-description">Configura las formas de pago disponibles</p>
+                    </div>
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>

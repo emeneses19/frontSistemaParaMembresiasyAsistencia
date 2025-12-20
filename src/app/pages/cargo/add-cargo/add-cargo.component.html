@@ -1,0 +1,13 @@
+<div class="form-cargo">
+    <form [formGroup]="cargoForm" (ngSubmit)="guardarCargo()" class="form-cargo__form">
+        <mat-form-field class="form-cargo__field">
+            <mat-label>Nombre cargo</mat-label>
+            <input matInput formControlName="nombrecargo">
+        </mat-form-field>
+        <mat-form-field class="form-cargo__field">
+            <mat-label>Descripcion</mat-label>
+            <input matInput formControlName="descripcion">
+        </mat-form-field>
+        <button [disabled]="cargoForm.invalid" class="form__btn--save" >Guardar</button>
+    </form>
+</div>

@@ -1,0 +1,50 @@
+<header class="header">
+    <div class="header-container">
+        <div class="brand">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="3" width="8" height="8" rx="1" fill="#08D629" />
+                    <rect x="3" y="13" width="8" height="8" rx="1" fill="#08D629" />
+                    <rect x="13" y="3" width="8" height="8" rx="1" fill="#08D629" />
+                    <rect x="13" y="13" width="8" height="8" rx="1" fill="#08D629" />
+                </svg>
+            </div>
+            <h1 class="title">{{nombreEmpresa}}</h1>
+        </div>
+        <nav class="nav-desktop">
+            @for (item of menuItems; track $index) {
+            <a [routerLink]="[item.route]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                class="nav-item">
+                {{ item.label }}
+            </a>
+            }
+        </nav>
+
+        <!-- Botón menú hamburguesa - Mobile -->
+        <button class="menu-toggle" (click)="toggleMenu()" [class.open]="menuOpen">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="user-section">
+            <button class="notification-btn">
+                <mat-icon>notifications_none</mat-icon>
+            </button>
+
+            <div class="user-avatar">
+                <mat-icon>person_outline</mat-icon>
+            </div>
+        </div>
+    </div>
+
+    <!-- Para version Movil -->
+    <nav class="nav-mobile" [class.open]="menuOpen">
+        @for (item of menuItems; track $index) {
+        <a [routerLink]="[item.route]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+            class="nav-item">
+            {{ item.label }}
+        </a>
+        }
+    </nav>
+</header>

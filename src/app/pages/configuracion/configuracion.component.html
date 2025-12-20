@@ -1,0 +1,30 @@
+<div class="configuracion-page">
+    <mat-tab-group>
+        <mat-tab label="Membresias Miembros">
+            <form action="" class="form_configuracion-membresia">
+                <mat-form-field>
+                    <mat-label>Descripción</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Monto para membresia S/</mat-label>
+                    <input type="number" matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Frecuencia de meses para renovacion</mat-label>
+                    <input type="number" matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Tiempo dias para pagar</mat-label>
+                    <input type="number" matInput>
+                </mat-form-field>
+                <mat-slide-toggle>Activo</mat-slide-toggle>
+                
+            </form>
+            <button class="form__btn--save" [disabled]="">Guardar</button>
+
+        </mat-tab>
+        <mat-tab label="Otros"> otros </mat-tab>
+    </mat-tab-group>
+
+</div>

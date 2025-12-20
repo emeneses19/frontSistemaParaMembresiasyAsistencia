@@ -1,0 +1,44 @@
+<div class="curso_add">
+  <mat-card-header>
+    <mat-card-title>Registro de cursos</mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <form [formGroup]="cursoForm" (ngSubmit)="guardarCurso()" class="curso_add-form">
+    <mat-form-field class="curso_add-field" appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input formControlName="nombre" matInput placeholder="Nombre del curso">
+      @if (cursoForm.get('nombre')?.hasError('required')) {
+      <mat-error>Campo obligatorio</mat-error>
+      }
+
+    </mat-form-field>
+    <mat-form-field class="curso_add-field" appearance="outline">
+      <mat-label>Precio</mat-label>
+      <input formControlName="costo" type="number" matInput placeholder="Precio del curso">
+      @if (cursoForm.get('costo')?.hasError('min')) {
+      <mat-error>Precio no debe ser en negativo</mat-error>
+      }
+      @if (cursoForm.get('costo')?.hasError('required')) {
+      <mat-error>Campo obligatorio</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="curso_add-field" appearance="outline">
+      <mat-label>Periodo</mat-label>
+      <mat-select formControlName="idperiodo">
+        @for (periodo of listaperiodos; track $index) {
+        <mat-option [value]="periodo.idperiodo">{{periodo.nombreperiodo}}</mat-option>
+        }
+      </mat-select>
+      @if (cursoForm.get('idperiodo')?.value) {
+      <button matSuffix mat-icon-button aria-label="Clear" (click)="limpiarPeriodo()">
+        <mat-icon>close</mat-icon>
+      </button>
+      }
+       @if (cursoForm.get('idperiodo')?.hasError('required')) {
+      <mat-error>Campo obligatorio</mat-error>
+      }
+    </mat-form-field>
+    <button [disabled]="cursoForm.invalid" class="form__btn--save">Guardar</button>
+  </form>
+  <br>
+</div>

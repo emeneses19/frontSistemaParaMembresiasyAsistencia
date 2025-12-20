@@ -1,0 +1,41 @@
+<div class="cursos__lista">
+  @for (curso of listaCursosPaginada; track $index) {
+    <mat-card-content class="cursos__lista-datos">
+      <mat-card-subtitle>{{curso.nombre}} - {{curso.Periodo!.nombreperiodo}}
+        <span class="curso-precio">S/ {{curso.costo}}</span>
+      </mat-card-subtitle>
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Acciones">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="abrirListaDeInscritos(curso)" >
+          <mat-icon>group</mat-icon>
+          <span>Lista de inscritos</span>
+        </button>
+        <button (click)="abrirIncripcion(curso)" mat-menu-item>
+          <mat-icon>person_add</mat-icon>
+          <span>Inscribir</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="eliminarCurso(curso.idcurso!)">
+          <mat-icon>delete</mat-icon>
+          <span>Eliminar</span>
+        </button>
+        <button (click)="enviarCursoParaEditar(curso)" mat-menu-item>
+          <mat-icon>edit</mat-icon>
+          <span>Editar</span>
+        </button>
+      </mat-menu>      
+    </mat-card-content>  
+  }
+    <mat-paginator 
+    [length]="totalCursos"
+    [pageSize]="tamanioPagina"
+    [pageIndex]="indexPagina"
+    (page)="manejarCambioDePagina($event)"
+
+    aria-label="Seleccionar pagina de cursos">
+    </mat-paginator>
+
+
+</div>

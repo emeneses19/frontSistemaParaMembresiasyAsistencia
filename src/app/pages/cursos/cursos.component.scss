@@ -1,0 +1,41 @@
+.cursos {
+    width: 100%;
+}
+
+.cursos__content {
+    margin: 0 var(--space-sm);
+}
+
+.content {
+    margin: var(--space-sm) var(--space-sm);
+}
+
+
+.cursos__section-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xl);
+    margin-top: var(--space-lg);
+}
+
+.cursos__section .curso-card {
+    flex-grow: 1; 
+}
+
+.cursos__section-cards mat-card:nth-child(1) {
+    flex-basis: 60%; 
+    min-width: 300px; 
+}
+
+.cursos__section-cards mat-card:nth-child(2) {
+    flex-basis: 30%;
+    min-width: 200px; 
+}
+
+
+@media (max-width: 900px) {
+    .cursos__section-cards mat-card:nth-child(1),
+    .cursos__section-cards mat-card:nth-child(2) {
+        flex-basis: 100%;
+    }
+}

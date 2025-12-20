@@ -1,0 +1,133 @@
+.students{
+  width: 100%;
+}
+// section title 
+.students__title{
+  display: flex;
+  justify-content: space-between;
+  margin: var(--space-sm);
+  padding-right: var(--space-xs);
+  align-items: center;
+}
+.students__actions{
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+}
+.student__action{
+  transition: background-color 0.2s, box-shadow 0.2s;
+  padding: 5px 10px;
+  align-items: center;
+  text-align: center; 
+  display: flex;
+  gap: 0.4rem; 
+}
+.student__button_export{
+  border: none;
+  background-color: #ffffff;
+  color: #408e4b;
+  box-shadow: 0 0 0 1px rgba(64, 142, 75, 0.5), /* Borde muy fino gris claro */
+                0 1px 3px rgba(0, 0, 0, 0.05); /* Sombra muy sutil abajo */
+  border-radius: 0.3rem;
+  
+}
+.student__button_export span{
+  font-weight: bold;
+  font-size: var( --font-size-sm);
+}
+.student__button_add {
+    border: none;
+    background-color: var(--color-primary);
+    color: #ffffff;
+     border-radius: 0.3rem;
+}
+
+.student__button_add span{
+   font-weight: bold;
+  font-size: var( --font-size-sm);
+}
+.student__action:hover{
+  cursor: pointer;
+}
+.student__button_export:hover{
+  background-color: var(--color-secondary);
+}
+
+.student__button_add:hover{
+  background-color: var(--color-primary-hover);
+}
+// section filters
+.students__filters{
+  display: flex;
+  justify-content: space-between;
+  margin: 0 var(--space-sm);
+}
+.students__filters mat-button-toggle-group{
+  height: 2.5rem ;
+}
+
+.students__filters mat-button-toggle-group mat-button-toggle{
+  height: 2.3rempx;
+}
+
+.estudents__filters-refresh{
+  background-color: #ffffff;
+  border: none;
+  color: var(--color-secondary);
+  margin-right: 0.5rem;
+}
+.estudents__filters-refresh:hover{
+  cursor: pointer;
+  color: var(--color-primary-hover);
+}
+.mat-mdc-form-field {
+    font-size: 14px;
+    width: 300px; 
+}
+.mat-elevation-z8{
+  width: 100%;
+}
+.students__table{
+  overflow-x: auto;
+  max-height: calc(100vh - 338px);
+  overflow-y: auto;
+
+}
+
+table {
+  overflow-x: auto;
+    width: 100%; /* Asegura que la tabla ocupe el ancho del contenedor */
+    min-width: 1500px; /* **Importante**: Define un ancho mínimo mayor que el contenedor para forzar el scroll horizontal */
+    border-collapse: collapse; /* Estándar para tablas */
+}
+
+.acciones-contenedor {
+  display: flex;
+  justify-content: center; /* o space-between, según necesites */
+  align-items: center;
+  gap: 8px;
+}
+
+
+//para que quede estatico en la pantalla y no afecte el scroll en la tabla
+.mat-column-acciones-sticky {
+    position: sticky;
+    right: 0;
+    z-index: 10; 
+}
+.acciones-cell {
+    padding: 0 8px; 
+    text-align: center;
+}
+
+ .students__table th {
+    position: sticky;
+    top: 0; 
+    z-index: 20;
+}
+
+ .students__table th.mat-column-acciones-sticky{
+    z-index: 30;
+ }
+
+ 

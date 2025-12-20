@@ -1,0 +1,26 @@
+.cursos__lista {
+    padding: var(--space-xxs); 
+}
+
+.cursos__lista-datos{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.cursos__lista-datos mat-card-subtitle{
+  flex-grow: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+}
+.curso-precio{
+  color: #4CAF50;
+  font-weight: bold;
+  font-size: var(--font-size-base);
+  margin-left: var(--space-xxs);
+}
+.cursos__lista mat-paginator {
+    border-top: 1px solid #E5E5E5; /* Opcional: una línea para separarlo de la lista */
+}

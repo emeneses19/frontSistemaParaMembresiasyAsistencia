@@ -1,0 +1,121 @@
+<div class="inscripcion__list">
+    <div class="inscripcion__lista-header">
+        <div class="inscripcion__lista-select">
+            <mat-form-field>
+                <mat-label>Selecciona el curso</mat-label>
+                <input type="text" matInput [formControl]="cursoControl" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayCurso">
+                    @for (curso of opcionesCursosFiltradas$ |async ; track curso.idcurso ) {
+                    <mat-option [value]="curso" (onSelectionChange)="onCursoSeleccionado(curso)">
+                        {{ curso.nombre }} - {{curso.Periodo?.nombreperiodo}}
+                    </mat-option>
+                    }
+                </mat-autocomplete>
+            </mat-form-field>
+            <button mat-icon-button color="primary" (click)="obtnerListaDeInscritos()">
+                <mat-icon>search</mat-icon>
+            </button>
+        </div>
+        <div class="inscripcion__lista-filtro">
+            <mat-form-field>
+                <mat-label>Buscar inscripción</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ej. 00000000" #input>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="inscripcion__table">
+        <div class="nombre__curso">
+            {{nombreCursoActual | uppercase}}
+        </div>
+
+        <div class="mat-elevation-z8">
+            @if (cargando) {
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <p class="loading-spinner__text">Cargando...</p>
+            </div>
+            }
+            @else {
+            <table mat-table [dataSource]="dataInscripcion" matSort>
+
+                <!-- Checkbox Column -->
+
+                <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()"
+                            [aria-label]="checkboxLabel()">
+                        </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                            [aria-label]="checkboxLabel(row)"
+                            [disabled]="row.estado !=='Activo' || row.Estudiante?.esmiembro">
+
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="fecha">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha I.</th>
+                    <td mat-cell *matCellDef="let inscripcion"> {{inscripcion.fechadeinscripcion | date:'dd/MM/yyyy'}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="dni">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> DNI</th>
+                    <td mat-cell *matCellDef="let inscripcion"> {{inscripcion.dni}} </td>
+                </ng-container>
+                <ng-container matColumnDef="nombres">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombres </th>
+                    <td mat-cell *matCellDef="let inscripcion"> {{inscripcion.Estudiante.nombres}}
+                        {{inscripcion.Estudiante.apellidos}} </td>
+                </ng-container>
+                <ng-container matColumnDef="estado">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+                    <td mat-cell *matCellDef="let inscripcion"> {{inscripcion.estado}} </td>
+                </ng-container>
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column-acciones-sticky">
+                        Acciones
+                    </th>
+                    <td mat-cell *matCellDef="let inscripcion" class="acciones-cell mat-column-acciones-sticky">
+                        @if (inscripcion.estado==='Activo') {
+                        <button (click)="darDeBajaUnEstudinate(inscripcion.idinscripcion)" mat-icon-button
+                            class="btn-acciones baja" aria-label="dar-de-baja">
+                            <span class="btn-texto">dar de baja</span>
+                        </button>
+                        }
+                        @else {
+                        <button (click)="reactivarUnEstudinate(inscripcion.idinscripcion)" mat-icon-button
+                            class="btn-acciones activo" aria-label="re-activar">
+                            <span class="btn-texto">Re-activar</span>
+                        </button>
+                        }
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" [attr.colspan]="displayedColumns.length">No se encontraron inscripciones con:
+                        "{{input.value}}"</td>
+                </tr>
+
+            </table>
+            }
+        </div>
+        <div class="inscripcion__tabla-pie">
+            <mat-paginator [pageSizeOptions]="[ 5, 10, 50]" aria-label="Seleccionar página de inscripciones">
+            </mat-paginator>
+            @if (listaDeEstudiantesParaMiembro.length > 0) {
+            <button class="btn-validacion">Pasar a Miembro</button>
+            }
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,152 @@
+<div class="container_all">
+  <div class="container__title">
+    <h2 mat-dialog-title>Registrar estudiante </h2>
+    <mat-dialog-actions align="end">
+      <button mat-dialog-close aria-label="close">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-dialog-actions>
+  </div>
+  <mat-dialog-content>
+    <form [formGroup]="estudianteForm" (ngSubmit)="guardarEstudiante()" class="form_estudiantes">
+      <mat-tab-group>
+        <mat-tab class="estudinate__general" label="General">
+          <div class="group top">
+            <mat-form-field class="form__inputs">
+              <mat-label>DNI</mat-label>
+              <input matInput formControlName="dni">
+              <button (click)="buscarPorDNI(estudianteForm.value.dni)" mat-icon-button matSuffix aria-label="search">
+                <mat-icon>search</mat-icon>
+              </button>
+               @if (estudianteForm.get('dni')?.hasError('pattern')) {
+              <mat-error>Solo números de 8 digitos</mat-error>
+              }
+              @if (estudianteForm.get('dni')?.hasError('required')) {
+              <mat-error>Campo obligatorio</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field class="form__inputs">
+              <mat-label>Nombres</mat-label>
+              <input matInput formControlName="nombres">
+               @if (estudianteForm.get('nombres')?.hasError('minlength')) {
+              <mat-error>Nombres debe tener al menos 3 caracteres</mat-error>
+              }
+               @if (estudianteForm.get('nombres')?.hasError('maxlength')) {
+              <mat-error>Nombres no puede superar los 100 caracteres</mat-error>
+              }
+              @if (estudianteForm.get('nombres')?.hasError('required')) {
+              <mat-error>Campo obligatorio</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="group">
+            <mat-form-field class="form__inputs">
+              <mat-label>Apellidos</mat-label>
+              <input matInput formControlName="apellidos">
+               @if (estudianteForm.get('apellidos')?.hasError('minlength')) {
+              <mat-error>Nombres debe tener al menos 3 caracteres</mat-error>
+              }
+               @if (estudianteForm.get('apellidos')?.hasError('maxlength')) {
+              <mat-error>Nombres no puede superar los 150 caracteres</mat-error>
+              }
+              @if (estudianteForm.get('apellidos')?.hasError('required')) {
+              <mat-error>Campo obligatorio</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field class="form__inputs">
+              <mat-label>Celular</mat-label>
+              <input matInput formControlName="celular">
+                  @if (estudianteForm.get('celular')?.hasError('pattern')) {
+              <mat-error>Solo números de 9 a 20 digitos</mat-error>
+              }
+              @if (estudianteForm.get('celular')?.hasError('required')) {
+              <mat-error>Campo obligatorio</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="group">
+            <mat-form-field class="form__inputs">
+              <mat-label>Ingrese su correo</mat-label>
+              <input matInput formControlName="correo" placeholder="pat@example.com" required />
+              @if (estudianteForm.get('correo')?.hasError('email')) {
+              <mat-error>Formato invalido</mat-error>
+              }
+              @if (estudianteForm.get('correo')?.hasError('required')) {
+              <mat-error>Campo obligatorio</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field class="form__inputs">
+              <mat-label>Fecha de Nacimiento</mat-label>
+              <input formControlName="fechadenacimiento" matInput [matDatepicker]="picker">
+              <mat-hint>DD/MM/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+               @if (estudianteForm.get('fechadenacimiento')?.hasError('required')) {
+              <mat-error>Campo obligatorio</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+        </mat-tab>
+        <mat-tab label="Información adicional">
+          <div class="group top">
+            <mat-form-field class="form__inputs">
+              <mat-label>Dirección</mat-label>
+              <input matInput formControlName="direccion">
+                 @if (estudianteForm.get('direccion')?.hasError('required')) {
+              <mat-error>Campo obligatorio</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field class="form__inputs">
+              <mat-label>Estado</mat-label>
+              <mat-select formControlName="estado">
+                <mat-option value="Activo">Activo</mat-option>
+                <mat-option value="Fluctuante">Fluctuante</mat-option>
+                <mat-option value="Retirado">Retirado</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="group">
+            <mat-form-field class="form__inputs">
+              <mat-label>Grupo Miembro</mat-label>
+              <mat-select formControlName="idgruposmiembro">
+                 @for (grupo of grupos; track $index) {
+                  <mat-option [value]="grupo.idgruposmiembro">{{grupo.idgruposmiembro}} - {{ grupo.nombredelgrupo}}</mat-option>
+                } 
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form__inputs">
+              <mat-label>Área</mat-label>
+              <mat-select formControlName="idarea">
+                @for (area of areas; track $index) {
+                  <mat-option [value]="area.idarea">{{area.idarea}} - {{ area.nombrearea}}</mat-option>
+                }                
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="group">
+            <mat-form-field class="form__inputs">
+              <mat-label>Detalle 1</mat-label>
+              <input matInput formControlName="detalle1">
+            </mat-form-field>
+            <mat-form-field class="form__inputs">
+              <mat-label>Detalle 2</mat-label>
+              <input matInput formControlName="detalle2">
+            </mat-form-field>
+          </div>
+          <div class="group">
+            <mat-form-field class="form__inputs" >
+              <mat-label>Cargo</mat-label>
+              <mat-select formControlName="idcargo">
+                 @for (cargo of cargos; track $index) {
+                  <mat-option [value]="cargo.idcargo">{{cargo.idcargo}} - {{ cargo.nombrecargo}}</mat-option>
+                } 
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+      <button class="form__btn--save" [disabled]="estudianteForm.invalid">Guardar</button>
+    </form>
+  </mat-dialog-content>
+</div>

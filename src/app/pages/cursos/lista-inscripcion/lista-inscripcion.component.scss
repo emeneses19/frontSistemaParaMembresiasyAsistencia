@@ -1,0 +1,76 @@
+.inscripcion__list{
+    width: 100%;
+}
+.inscripcion__lista-header{
+    width: 100%;
+    display: flex;
+    align-content: space-between;
+}
+.inscripcion__lista-select {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.inscripcion__lista-select mat-form-field {
+  width: 350px; 
+}
+.inscripcion__lista-filtro mat-form-field {
+  width: 250px; 
+}
+.inscripcion__lista-filtro{
+   margin-left: auto;
+   margin-right: 0%;
+}
+.nombre__curso{
+    text-align: center;
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 4px;
+}
+.mat-elevation-z8 {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+table {
+  width: 100%;
+}
+.btn-acciones { 
+  min-width: 75px;
+  height: 30px; 
+  padding: 0 10px;
+  margin: 4px; 
+  border-radius: 3px;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  cursor: pointer;
+  border: none;
+  color: #ffff; 
+  
+}
+
+.btn-texto {
+    font-weight: bold; 
+}
+
+.btn-acciones.baja {
+  background-color: #A88A00; 
+}
+
+.btn-acciones.activo {
+  background-color: var(--color-secondary, green); 
+}
+.inscripcion__tabla-pie{
+  display: flex;
+}
+.inscripcion__tabla-pie .btn-validacion{
+background-color: var(--color-success);
+margin: 0;
+padding:0 0.5rem;
+border-radius: var(--radius-sm);
+border: none;
+color: #ffff;
+font-weight: bold;
+cursor: pointer;
+}

@@ -1,0 +1,13 @@
+<div class="form-area">
+  <form [formGroup]="areaForm" (ngSubmit)="guardarArea()" class="form-area__form" >
+    <mat-form-field class="form-area__field">
+      <mat-label>Nombre area</mat-label>
+      <input  matInput  formControlName="nombrearea" required="required"/>
+    </mat-form-field>
+    <mat-form-field class="form-area__field">
+      <mat-label>Descripcion</mat-label>
+      <input  matInput  formControlName="descripcion"/>
+    </mat-form-field>
+    <button [disabled]="areaForm.invalid" class="form__btn--save">Guardar</button>
+  </form>
+</div>

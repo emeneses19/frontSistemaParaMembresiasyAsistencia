@@ -1,0 +1,64 @@
+<div class="periodo">
+    <div class="periodo__header">
+        <h2 mat-dialog-title>Lista de Periodos</h2>
+        <mat-dialog-actions>
+            <button mat-dialog-close aria-label="close">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-dialog-actions>
+    </div>
+    <mat-dialog-content>
+        <div class="perior__form">
+            <app-add-periodo (periodoGuardado)="agregarPeriodo($event)"
+                (nombreIngresado)="buscarPeriodoPorNombre($event)"></app-add-periodo>
+        </div>
+        <div class="periodo__report">
+            @if (cargando==true) {
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <p class="loading-spinner__text">Cargando...</p>
+            </div>
+            }
+            @else {
+            <table mat-table [dataSource]="dataSource" class="custom-table">
+                <ng-container matColumnDef="idperiodo">
+                    <th mat-header-cell *matHeaderCellDef class="custom-table__header">Código</th>
+                    <td mat-cell *matCellDef="let periodo" class="custom-table__cell">
+                        {{ periodo.idperiodo }}
+                    </td>
+                </ng-container>
+                <!-- Fecha -->
+                <ng-container matColumnDef="nombreperiodo">
+                    <th mat-header-cell *matHeaderCellDef class="custom-table__header">Nombre</th>
+                    <td mat-cell *matCellDef="let periodo" class="custom-table__cell">
+                        {{ periodo.nombreperiodo }}
+                    </td>
+                </ng-container>
+                <!-- Acciones -->
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef class="custom-table__header">Acciones</th>
+                    <td mat-cell *matCellDef="let periodo" class="custom-table__cell custom-table__cell--actions">
+                        <button mat-icon-button color="warn" aria-label="delete"
+                            (click)="eliminarPeriodo(periodo.idperiodo)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No hay datos con "{{nombreIngresado}}"</td>
+                </tr>
+
+            </table>
+            }
+        </div>
+    </mat-dialog-content>
+
+  
+
+
+</div>

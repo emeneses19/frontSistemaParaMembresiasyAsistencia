@@ -1,0 +1,9 @@
+<div class="form-periodo">
+  <form [formGroup]="periodoForm" (ngSubmit)="guardarPeriodo()" class="form-periodo__form" >
+    <mat-form-field class="form-periodo__field">
+      <mat-label>Nombre periodo</mat-label>
+      <input  matInput  formControlName="nombreperiodo" required="required"/>
+    </mat-form-field>
+    <button [disabled]="periodoForm.invalid" class="form__btn--save">Guardar</button>
+  </form>
+</div>

@@ -1,0 +1,67 @@
+<div class="inscripcion">
+    <div class="inscripcion__header">
+        <h2 mat-dialog-title>Registrar nueva inscripcion</h2>
+        <mat-dialog-actions>
+            <button mat-dialog-close aria-label="close">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-dialog-actions>
+    </div>
+    <mat-dialog-content>
+        <div class="form-inscripcion">
+            <form [formGroup]="inscripcionForm" (ngSubmit)="guardarIncripcion()" class="form-inscripcion__form">
+                <div class="group__field">
+                    <mat-form-field class="form-inscripcion__field right">
+                        <mat-label>Curso código</mat-label>
+                        <input matInput formControlName="idcurso" required="required" />
+                        @if (inscripcionForm.get('idcurso')?.hasError('required')) {
+                        <mat-error>Campo obligatorio</mat-error>
+                        }
+                    </mat-form-field>
+                    <mat-form-field class="form-inscripcion__field left">
+                        <mat-label>Datos del curso</mat-label>
+                        <input matInput formControlName="datosCurso" readonly />
+                    </mat-form-field>
+                </div>
+                <div class="group__field">
+                    <mat-form-field class="form-inscripcion__field right">
+                        <mat-label>DNI</mat-label>
+                        <input (blur)="buscarEstudianteDNI()" matInput formControlName="dni" required="required" />
+                        @if (inscripcionForm.get('dni')?.hasError('required')) {
+                        <mat-error>Campo obligatorio</mat-error>
+                        }
+                        @if (inscripcionForm.get('dni')?.hasError('pattern')) {
+                        <mat-error>El DNI debe tener 8 dígitos</mat-error>
+                        }
+                    </mat-form-field>
+                    <mat-form-field class="form-inscripcion__field left">
+                        <mat-label>Estudiante</mat-label>
+                        <input matInput formControlName="nombreEstudiante" readonly />
+                        @if (cargandoBusqueda) {
+                        <mat-spinner matSuffix diameter="20"></mat-spinner>
+                        }
+                    </mat-form-field>
+                </div>
+                <mat-form-field class="group__field">
+                    <mat-label>Fecha de inscripcion</mat-label>
+                    <input matInput [matDatepicker]="datepicker" formControlName="fechadeinscripcion" required>
+                    <mat-datepicker #datepicker />
+                    <mat-datepicker-toggle [for]="datepicker" matSuffix />
+                    @if (inscripcionForm.get('fechadeinscripcion')?.hasError('required')) {
+                    <mat-error>Campo obligatorio</mat-error>
+                    }
+                </mat-form-field>
+                @if (cargando) {
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p class="loading-spinner__text">Cargando...</p>
+                </div>
+                }
+                <button [disabled]="inscripcionForm.invalid || cargando || estudianteEncontrado==false" class="form__btn--save">
+                    Guardar
+                </button>
+
+            </form>
+        </div>
+    </mat-dialog-content>
+</div>

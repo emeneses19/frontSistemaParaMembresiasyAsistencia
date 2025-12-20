@@ -1,0 +1,13 @@
+<div class="form-metodopago">
+  <form [formGroup]="metodoPagoForm" (ngSubmit)="guardarMetodoPago()" class="form-periodo__form" >
+    <mat-form-field class="form-metodopago__field">
+      <mat-label>Nombre</mat-label>
+      <input  matInput  formControlName="nombre" required="required"/>
+    </mat-form-field>
+    <mat-form-field class="form-metodopago__field">
+      <mat-label>descripción</mat-label>
+      <input  matInput  formControlName="descripcion" required="required"/>
+    </mat-form-field>
+    <button [disabled]="metodoPagoForm.invalid" class="form__btn--save">Guardar</button>
+  </form>
+</div>
