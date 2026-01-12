@@ -1,18 +1,40 @@
-.configuracion-page{
-    margin: var(--space-xs) var(--space-lg);
+.configuracion-page {
+    padding: var(--space-xs) var(--space-lg);
 }
-.form_configuracion-membresia{
-    display: flex;
-    justify-content: space-between;
+
+.tab-content-container {
+    padding: 24px 0; 
+    max-width: 800px; 
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: var(--space-md) var(--space-xl); 
+    align-items: center;
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+mat-form-field {
     width: 100%;
-
-
 }
-// .form_configuracion-membresia mat-form-field {
-//     flex: 1 1 250px;
-// }
 
-// .form_configuracion-membresia mat-slide-toggle{
-//     flex: 1 1 250px;
-//     margin-top: 10px;
-// }
+.toggle-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-bottom: 1.25em; 
+}
+
+
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .full-width {
+        grid-column: span 1;
+    }
+}

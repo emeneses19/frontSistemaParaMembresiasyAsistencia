@@ -1,0 +1,65 @@
+<div class="section-card">
+
+    <div class="table-container">
+        <table class="curso-table">
+            <thead>
+                <tr>
+                    <th>Detalle</th>
+                    <th>Monto</th>
+                    <th>Fecha i.</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (curso of listaCursosPaginada; track $index) {
+                <tr>
+                    <td>
+                        <div class="concept-cell">
+                            <span class="concept-name">{{curso.cursoNombre | uppercase}} - {{curso.nombrePeriodo |
+                                uppercase}}</span>
+                        </div>
+                    </td>
+                    <td><span class="amount">S/{{curso.costoCurso}}</span></td>
+                    <td>{{curso.fechadeinscripcion | date:'dd/MM/yyyy'}}</td>
+                    <td>
+                        <span class="status-badge" [ngClass]="getClassEstado(curso.estato_Pago_Curso)">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                @if (curso.estato_Pago_Curso==='Pendiente') {
+                                <circle cx="12" cy="12" r="10" />
+                                }
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                            {{curso.estato_Pago_Curso}}
+                        </span>
+                    </td>
+                    <td>
+                       @if(curso.estato_Pago_Curso!=='Pagado'){
+                         <button class="btn-pagar" (click)="abrirParaPagarCurso(curso.idinscripcion)">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                                <line x1="1" y1="10" x2="23" y2="10" />
+                            </svg>
+                            Pagar
+                        </button>
+
+                       }
+                    </td>
+                </tr>
+                }               
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Paginación (aquí irá tu componente de Angular) -->
+    <div class="pagination-container">
+        <!-- Aquí va tu paginador de Angular -->
+        <div class="pagination-placeholder">
+            <mat-paginator [length]="totalListaCursos" [pageSize]="tamanioPagina" [pageIndex]="indexPagina"
+                (page)="manejarCambioDePagina($event)" aria-label="seguiente">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

@@ -6,6 +6,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 export const MATERIAL_IMPORTS =[
     MatButtonModule,
@@ -15,5 +16,6 @@ export const MATERIAL_IMPORTS =[
     MatSelectModule,
     MatInputModule,
     MatFormFieldModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTooltipModule
 ]

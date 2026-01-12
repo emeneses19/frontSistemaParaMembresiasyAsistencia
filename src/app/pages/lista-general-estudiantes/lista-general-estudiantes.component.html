@@ -1,0 +1,77 @@
+<div class="lista-general-students">
+
+  <!-- HEADER -->
+  <mat-card class="lista-header" appearance="outlined">
+    <div class="lista-header__content">
+      <h2 class="lista-title">Lista general de estudiantes</h2>
+      <mat-form-field  class="lista-filter">
+        <mat-label>Buscar estudiante</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Mia" #input>
+      </mat-form-field>
+    </div>
+  </mat-card>
+
+  <!-- TABLA -->
+  <div class="lista-general-student__report mat-elevation-z8">
+    @if (cargando) {
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Cargando...</p>
+      </div>
+    } @else {
+
+      <table  mat-table [dataSource]="dataEstudiante" matSort>
+
+        <ng-container matColumnDef="dni">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>DNI</th>
+          <td mat-cell *matCellDef="let e">{{ e.dni }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombresYApellidos">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombres</th>
+          <td mat-cell *matCellDef="let e">
+            {{ e.nombres }} {{ e.apellidos }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+          <td mat-cell *matCellDef="let e">{{ e.estado }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="celular">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Celular</th>
+          <td mat-cell *matCellDef="let e">{{ e.celular }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef class="acciones-header">
+            Acciones
+          </th>
+          <td mat-cell *matCellDef="let estudiante" class="acciones-cell">
+            <button mat-icon-button
+              (click)="verEstadoDeCuenta(estudiante.dni)"
+              matTooltip="Ver estado de cuenta">
+              <mat-icon>payments</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr mat-row *matNoDataRow>
+          <td mat-cell colspan="5">No se encontraron datos</td>
+        </tr>
+
+      </table>
+
+      
+
+    }
+    <mat-paginator
+        [pageSizeOptions]="[5,10,50]"
+        showFirstLastButtons>
+      </mat-paginator>
+  </div>
+</div>

@@ -113,7 +113,7 @@
             <mat-paginator [pageSizeOptions]="[ 5, 10, 50]" aria-label="Seleccionar página de inscripciones">
             </mat-paginator>
             @if (listaDeEstudiantesParaMiembro.length > 0) {
-            <button class="btn-validacion">Pasar a Miembro</button>
+            <button class="btn-validacion" (click)="abrirFormPasarMiembro()" >Pasar a Miembro</button>
             }
         </div>
 

@@ -18,7 +18,7 @@ export class HeaderComponent {
     { label: 'Inicio', route: '/', active: true },
     { label: 'Cursos', route: '/cursos', active: false },
     { label: 'Estudiantes', route: '/estudiantes', active: false },
-    { label: 'Membresias', route: '/membresias', active: false },
+    { label: 'E. Cuenta', route: '/lista-general', active: false },
     { label: 'Asistencias', route: '/asistencias', active: false },
     { label: 'Auxiliar', route: '/auxiliar', active: false },
     { label: 'Configuración', route: '/configuracion', active: false }

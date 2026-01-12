@@ -1,0 +1,47 @@
+<div class="estado-cuenta-estudiante">
+    <div class="title">
+        <button mat-stroked-button color="primary" [routerLink]="['/lista-general']">
+            <mat-icon>arrow_back</mat-icon>
+            volver alista general
+        </button>
+        <h2>Estado de cuenta</h2>
+    </div>
+    @if (cargando==true) {
+    <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p class="loading-spinner__text">Cargando...</p>
+    </div>
+    }
+    <div class="detalle-de-estado-de-cuenta">
+        <div class="datos-delestudiante">
+            <p><span> {{estudianteEncontrado.nombres}} {{estudianteEncontrado.apellidos}} - DNI: {{dniObtenida}}</span>
+            </p>
+        </div>
+        <div class="estado-cuenta">
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Membresias </mat-panel-title>
+                         <mat-panel-description>
+                            Click para {{panelOpenState() ? 'ocultar detalles' : 'más detalles'}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <app-membresia-cuenta ></app-membresia-cuenta>
+                    
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title> Cursos </mat-panel-title>
+                        <mat-panel-description>
+                            Click para {{panelOpenState() ? 'ocultar detalles' : 'más detalles'}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <app-curso-cuenta [listaDeCursosDeEstudiante]="listaDeCursosDelEstudiante"></app-curso-cuenta>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+        </div>
+    </div>
+
+
+</div>

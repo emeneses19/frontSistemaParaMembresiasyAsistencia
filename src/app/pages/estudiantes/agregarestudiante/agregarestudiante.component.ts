@@ -13,6 +13,7 @@ import { CargoModel } from '../../../models/Cargo';
 import { CargoService } from '../../../services/cargo.service';
 import { SuccesDialogService } from '../../../services/succes-dialog.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Validadores } from '../../../shared/validators/myvalidators';
 
 @Component({
   selector: 'app-agregarestudiante',
@@ -55,7 +56,7 @@ export class AgregarestudianteComponent implements OnInit {
     this.obtenerCargos();
     this.estudianteForm = this.fb.group({
       dni: ['', [Validators.required, Validators.pattern(/^[0-9]{8}$/)]],
-      nombres: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      nombres: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validadores.sinEspacios]],
       apellidos: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]],
       celular: ['', [Validators.required, Validators.pattern(/^[0-9]{9,20}$/)]],
       correo: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(55), Validators.email]],

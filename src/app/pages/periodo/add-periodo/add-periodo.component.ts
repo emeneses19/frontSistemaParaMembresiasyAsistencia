@@ -3,6 +3,7 @@ import { MATERIAL_IMPORTS } from '../../../shared/material.imports';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PeriodoModel } from '../../../models/periodo';
 import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
+import { Validadores } from '../../../shared/validators/myvalidators';
 
 @Component({
   selector: 'app-add-periodo',
@@ -23,7 +24,7 @@ export class AddPeriodoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.periodoForm = this.fb.group({
-      nombreperiodo:['',[Validators.required,Validators.maxLength(45)]]
+      nombreperiodo:['',[Validators.required,Validators.maxLength(45), Validadores.sinEspacios]]
     })
     this.setupValueChangesEmitter();
   }

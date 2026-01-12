@@ -1,0 +1,44 @@
+<div class="container_all">
+    <div class="container__title">
+        <h2 mat-dialog-title>Registrar estudiantes a miembro </h2>
+        <mat-dialog-actions align="end">
+            <button mat-dialog-close aria-label="close">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-dialog-actions>
+    </div>
+    <mat-dialog-content>
+        <p>Estas pasando a <span>{{data.estudiantes.length}}</span> estudiantes </p>
+        @if (cargando==true) {
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <p class="loading-spinner__text">Cargando...</p>
+            </div>
+            }
+        <form class="form_pasarmiembro" [formGroup]="pasarAMiembroForm"  (ngSubmit)="pasarAMiembroAEstudiantes()">
+            <mat-form-field class="form__inputs">
+                <mat-label>Grupo Miembro</mat-label>
+                <mat-select formControlName="idgruposmiembro" required>
+                    @for (grupo of gruposMiembro; track $index) {
+                    <mat-option [value]="grupo.idgruposmiembro">{{grupo.idgruposmiembro}} - {{
+                        grupo.nombredelgrupo}}</mat-option>
+                    }
+                </mat-select>
+                @if (pasarAMiembroForm.get('idgruposmiembro')?.hasError('required')) {
+                <mat-error>Campo obligatorio</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field class="form__inputs">
+                <mat-label>Fecha de asignación</mat-label>
+                <input matInput [matDatepicker]="fecha" formControlName="fechaasignacionmiembro" required>
+                <mat-hint>DD/MM/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="fecha"></mat-datepicker-toggle>
+                <mat-datepicker #fecha></mat-datepicker>
+                @if (pasarAMiembroForm.get('fechaasignacionmiembro')?.hasError('required')) {
+                <mat-error>Campo obligatorio</mat-error>
+                }
+            </mat-form-field>
+            <button class="form__btn--save" [disabled]="pasarAMiembroForm.invalid || cargando">Confirmar</button>
+        </form>
+    </mat-dialog-content>
+</div>

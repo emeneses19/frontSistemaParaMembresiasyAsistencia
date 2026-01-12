@@ -15,6 +15,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialog } from '@angular/material/dialog';
+import { PasaramiembroComponent } from '../../pasaramiembro/pasaramiembro.component';
+import { EstudianteModel } from '../../../models/Estudiantes';
 
 
 
@@ -59,6 +62,7 @@ export class ListaInscripcionComponent implements OnInit, OnDestroy {
   duracionEnSegundos = 5;
   nombreCursoActual: string = '';
   listaDeEstudiantesParaMiembro:InscripcionCursoModel[] = [];
+  readonly dialog = inject(MatDialog);
 
   constructor(private _cursoService: CursoService, private _inscripcionService: InscripcionService) {
 
@@ -82,7 +86,6 @@ export class ListaInscripcionComponent implements OnInit, OnDestroy {
     //para seleccionar y pasaer a miembro observable 
     this.selection.changed.subscribe(() => {
     this.listaDeEstudiantesParaMiembro = this.selection.selected; 
-    console.log('Estudiantes seleccionados:', this.listaDeEstudiantesParaMiembro);
   });
 
   }
@@ -95,6 +98,17 @@ export class ListaInscripcionComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  //Convertiendo a estudiantes para pasar a miembro 
+
+  get convertirListaDeEstudiantesParaMiembros(): EstudianteModel[]{
+    const estudiantesParaMiembo = this.listaDeEstudiantesParaMiembro.map(est=>{
+    return est.Estudiante;
+  });
+  return estudiantesParaMiembo as EstudianteModel[];
+  }
+  
+
 
   //para el check box en la tabla
 
@@ -132,7 +146,7 @@ export class ListaInscripcionComponent implements OnInit, OnDestroy {
 
   checkboxLabel(row?: InscripcionCursoModel): string {
     if (!row) {
-      const numSeleccionables = this.obtenerFilasSeleccionables();
+    const numSeleccionables = this.obtenerFilasSeleccionables();
     const numSelected = this.selection.selected.length;
     
     return `${this.isAllSelected() ? 'Deseleccionar' : 'Seleccionar'} todos (${numSelected} de ${numSeleccionables})`;
@@ -140,7 +154,7 @@ export class ListaInscripcionComponent implements OnInit, OnDestroy {
     return `${this.selection.isSelected(row) ? 'Deseleccionar' : 'Seleccionar'} fila ${row.idcurso + 1}`;
   }
 
-
+  //para filtro en la tabla
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataInscripcion.filter = filterValue.trim().toLowerCase();
@@ -236,7 +250,6 @@ export class ListaInscripcionComponent implements OnInit, OnDestroy {
 
       this.cargando = true;
       this.dataInscripcion.data = inscritos;
-      console.log(this.dataInscripcion);
       this.cargando = false;
     })
   }
@@ -290,5 +303,22 @@ export class ListaInscripcionComponent implements OnInit, OnDestroy {
     })
 
   }
+
+  //para pasar a miembro los estudiantes
+
+  abrirFormPasarMiembro(){
+    const dialogRef = this.dialog.open(PasaramiembroComponent,{
+      data:{estudiantes:this.convertirListaDeEstudiantesParaMiembros}
+    });
+    dialogRef.afterClosed().subscribe(result=>{
+      if(result){
+        this.obtnerListaDeInscritos();
+        this.selection.clear();
+        this.listaDeEstudiantesParaMiembro = []
+;      }
+    })
+
+  }
+
 
 }

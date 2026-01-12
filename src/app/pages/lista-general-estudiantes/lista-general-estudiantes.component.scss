@@ -1,0 +1,82 @@
+
+.lista-general-students {
+  padding: 0.75rem;
+}
+
+.lista-header {
+  margin-bottom: 0.75rem;
+}
+
+.lista-header__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.lista-title {
+  margin: 0 var(--space-md);
+}
+
+
+.lista-filter {
+  width: 260px;
+}
+
+.lista-general-student__report {
+  border-radius: 8px;
+  width: 100%;
+}
+
+/* Scroll vertical */
+.lista-general-student__report {
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+}
+
+
+.mat-header-row {
+  position: sticky;
+  top: 0;
+  background: #fafafa;
+  z-index: 5;
+}
+
+
+.mat-header-cell,
+.mat-cell {
+  padding: 8px 12px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+
+.acciones-header,
+.acciones-cell {
+  text-align: center;
+  width: 80px;
+}
+
+//paginacion
+mat-paginator {
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+  border-top: 1px solid #eee;
+}
+
+//responsive
+@media (max-width: 768px) {
+  .lista-header__content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lista-filter {
+    width: 100%;
+  }
+
+  .lista-general-student__report {
+    max-height: calc(100vh - 260px);
+  }
+}

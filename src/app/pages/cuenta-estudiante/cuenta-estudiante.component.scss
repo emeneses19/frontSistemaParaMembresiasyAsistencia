@@ -1,0 +1,26 @@
+.estado-cuenta-estudiante{
+    margin: 0 auto;
+    padding: 0 var(--space-lg)
+}
+.title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+}
+
+.title h2 {
+  margin: 0; 
+}
+.datos-delestudiante {
+    padding: 20px 24px;
+    background-color: #fafafa;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.datos-delestudiante p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    font-weight: bold;
+    
+}

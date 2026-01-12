@@ -36,7 +36,7 @@ export class EstudiantesComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   filterValue: 'all' | 'solo-miembros' | 'no-miembros' = 'all';
   estudiantes: EstudianteModel[] = [];
-   durationInSeconds = 5;
+  durationInSeconds = 5;
   private _snackBar = inject(MatSnackBar);
   constructor(private _estudianteService: EstudianteService) {
   }
