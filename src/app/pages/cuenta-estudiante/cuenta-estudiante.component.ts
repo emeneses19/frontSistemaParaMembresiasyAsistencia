@@ -8,6 +8,8 @@ import { EstudianteService } from '../../services/estudiante.service';
 import { EstudianteModel } from '../../models/Estudiantes';
 import { ReporteCursosEstudianteService } from '../../services/reporte-cursos-estudiante.service';
 import { ReportCursosEstudianteData } from '../../interfaces/cursos-estudiante-report';
+import { ReporteMembresiaEstudianteData } from '../../interfaces/membresia-estudiante-reports';
+import { ReporteMembresiasEstudianteService } from '../../services/reporte-membresias-estudiante.service';
 
 @Component({
   selector: 'app-cuenta-estudiante',
@@ -29,18 +31,21 @@ export class CuentaEstudianteComponent implements OnInit {
   estudianteEncontrado = new EstudianteModel();
   cargando: boolean = false;
   listaDeCursosDelEstudiante: ReportCursosEstudianteData[] = []
+  listaDeMembresiasDelEstudiante!: ReporteMembresiaEstudianteData;
 
   constructor(
     private route: ActivatedRoute,
     private _estudianteService: EstudianteService,
-    private _reporteCursosEstudiante: ReporteCursosEstudianteService
+    private _reporteCursosEstudiante: ReporteCursosEstudianteService,
+    private _reporteMembresiasEstudiante: ReporteMembresiasEstudianteService
   ) {
 
   }
-  
+
   ngOnInit() {
     this.obtenerDNIdesderoute();
     this.obtenerCursosParaElEstudiante(this.dniObtenida);
+    this.obtenerListaMembresiasParaEstudiante(this.dniObtenida);
 
 
   }
@@ -69,6 +74,15 @@ export class CuentaEstudianteComponent implements OnInit {
     this._reporteCursosEstudiante.obtenerListaDeCursosParaEstudiante(dni).subscribe(cursos => {
       this.listaDeCursosDelEstudiante = cursos;
     });
+  }
+
+  obtenerListaMembresiasParaEstudiante(dni: string) {
+    this._reporteMembresiasEstudiante.obtenerListaMembresiasParaEstudiante(dni).subscribe(obj => {
+      this.listaDeMembresiasDelEstudiante = obj;
+      console.log(this.listaDeMembresiasDelEstudiante, 'Este es en la cuenta membresia padre');
+    })
+
+
   }
 
 

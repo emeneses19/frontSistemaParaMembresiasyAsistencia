@@ -26,7 +26,7 @@
                             Click para {{panelOpenState() ? 'ocultar detalles' : 'más detalles'}}
                         </mat-panel-description>
                     </mat-expansion-panel-header>
-                    <app-membresia-cuenta ></app-membresia-cuenta>
+                    <app-membresia-cuenta  [listaDeMembresiasDelEstudiante]="listaDeMembresiasDelEstudiante" ></app-membresia-cuenta>
                     
                 </mat-expansion-panel>
                 <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">

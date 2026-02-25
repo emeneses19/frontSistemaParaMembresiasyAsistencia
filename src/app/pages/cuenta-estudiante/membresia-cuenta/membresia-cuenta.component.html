@@ -1,118 +1,84 @@
 <div class="section-card">
     <div class="secction-membresia">
-        <!-- Lista de Meses -->
+        <!-- Lista de Membresias -->
         <div class="membresia-grid">
+            @for (membresia of listaMembresiasPaginada; track $index) {
             <mat-card class="membresia-card" appearance="outlined">
                 <div class="membresia-detalle">
-                    <mat-checkbox></mat-checkbox>
+                    @if (membresia.montoesperado - membresia.montopagado > 0) {
+                    <mat-checkbox [(ngModel)]="membresia.seleccionada"
+                        (change)="membresiasSeleccionada(membresia)"></mat-checkbox>
+                    } @else {
+                    <mat-icon style="color: green; margin-right: 8px;">check_circle</mat-icon>
+                    }
                     <div class="membresia-info">
-                        <mat-card-title> Febrero 2025</mat-card-title>
-                        <mat-card-subtitle class="month-status expired">Vence el 05/04/2024</mat-card-subtitle>
+                        <mat-card-title> {{membresia.descripcionmembresia}} <span> | Total:
+                                S/{{membresia.montoesperado}} </span></mat-card-title>
+                        <mat-card-subtitle [ngClass]="getClassFecha(membresia)" class="month-status">Vence:
+                            {{membresia.fechalimitedepago |
+                            date:'dd/MM/yyyy' }}</mat-card-subtitle>
+                        <mat-card-subtitle>
+                            Pagado: S/{{membresia.montopagado}} |
+                            <span class="monto-pagar">Pendiente: S/{{membresia.montoesperado -
+                                membresia.montopagado}}</span>
+                        </mat-card-subtitle>
                     </div>
-
                 </div>
                 <div class="membresia-precio">
-                    <mat-card-title> $50.00</mat-card-title>
+                    @if (membresia.montoesperado - membresia.montopagado > 0) {
+                    <input 
+                    type="text"
+                    class="input-pago" 
+                    (keypress)="soloNumeros($event)"
+                    (input)="validarMonto($event, membresia)" 
+                    [disabled]="membresia.seleccionada"
+                    [value]="membresia.montoAbonar"
+                    />
+                    <small class="descricion-input">Monto a pagar</small>
+                    }
                 </div>
             </mat-card>
-            <mat-card class="membresia-card" appearance="outlined">
-                <div class="membresia-detalle">
-                    <mat-checkbox></mat-checkbox>
-                    <div class="membresia-info">
-                        <mat-card-title> Febrero 2025</mat-card-title>
-                        <mat-card-subtitle class="month-status expired">Vence el 05/04/2024</mat-card-subtitle>
-                    </div>
+            }
+            <!-- Deuda Global -->
+            <span class="deuda-global">
+                Deuda total pendiente: S/{{ deudaTotalGlobal }}
+            </span>
 
-                </div>
-                <div class="membresia-precio">
-                    <mat-card-title> $50.00</mat-card-title>
-                </div>
-            </mat-card>
-            <mat-card class="membresia-card" appearance="outlined">
-                <div class="membresia-detalle">
-                    <mat-checkbox></mat-checkbox>
-                    <div class="membresia-info">
-                        <mat-card-title> Febrero 2025</mat-card-title>
-                        <mat-card-subtitle class="month-status expired">Vence el 05/04/2024</mat-card-subtitle>
-                    </div>
 
-                </div>
-                <div class="membresia-precio">
-                    <mat-card-title> $50.00</mat-card-title>
-                </div>
-            </mat-card>
-            <mat-card class="membresia-card" appearance="outlined">
-                <div class="membresia-detalle">
-                    <mat-checkbox></mat-checkbox>
-                    <div class="membresia-info">
-                        <mat-card-title> Febrero 2025</mat-card-title>
-                        <mat-card-subtitle class="month-status expired">Vence el 05/04/2024</mat-card-subtitle>
-                    </div>
-
-                </div>
-                <div class="membresia-precio">
-                    <mat-card-title> $50.00</mat-card-title>
-                </div>
-            </mat-card>
-            <mat-card class="membresia-card" appearance="outlined">
-                <div class="membresia-detalle">
-                    <mat-checkbox></mat-checkbox>
-                    <div class="membresia-info">
-                        <mat-card-title> Febrero 2025</mat-card-title>
-                        <mat-card-subtitle class="month-status expired">Vence el 05/04/2024</mat-card-subtitle>
-                    </div>
-
-                </div>
-                <div class="membresia-precio">
-                    <mat-card-title> $50.00</mat-card-title>
-                </div>
-            </mat-card>
-          
-            
-           
-            <!-- Paginación -->
             <div class="pagination-container">
                 <div class="pagination-placeholder">
-                    <mat-paginator [length]="totalListaMembresias" [pageSize]="tamanioPagina" [pageIndex]="indexPagina"
-                        (page)="manejarCambioDePagina($event)" aria-label="seguiente">
+                    <mat-paginator [length]="totalListaSoloMembresias.length" [pageSize]="tamanioPagina"
+                        [pageIndex]="indexPagina" (page)="manejarCambioDePagina($event)" aria-label="seguiente">
                     </mat-paginator>
                 </div>
             </div>
+
 
         </div>
 
 
         <!-- Resumen de Pago (Sidebar o Card Flotante) -->
         <div class="payment-summary">
-            <h3 class="summary-title">Resumen de Pago</h3>
+            <h3 class="summary-title">Resumen de pagos</h3>
 
             <div class="summary-row">
-                <span>Conceptos seleccionados</span>
-                <span class="summary-value">3</span>
-            </div>
-
-            <div class="summary-row">
-                <span>Subtotal</span>
-                <span class="summary-value">$150.00</span>
+                <span>Membresías seleccionadas</span>
+                <span class="summary-value">: {{cantidadSeleccionadas}}</span>
             </div>
 
             <div class="summary-divider"></div>
 
             <div class="summary-total">
-                <span>Total a Pagar</span>
-                <span class="total-amount">$150.00</span>
+                <span>Total a pagar: </span>
+                <span class="total-amount"> S/ {{totalSeleccionado | number:'1.2-2'}}</span>
             </div>
 
-            <button class="btn-pay">
-                Pagar Seleccionados
+            <button 
+                    class="form__btn--save"
+                    [disabled]="cantidadSeleccionadas<=0 && totalSeleccionado<=0"
+                    (click)="abrirProcesarPagoMembresia()">
+                Pagar
             </button>
-            <p class="payment-secure">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                </svg>
-                Pagos procesados de forma segura
-            </p>
         </div>
 
     </div>

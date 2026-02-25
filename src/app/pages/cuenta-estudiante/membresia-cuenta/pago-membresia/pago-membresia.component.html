@@ -1,0 +1,54 @@
+<div class="inscripcion">
+
+    <mat-dialog-content>
+        <div class="form-inscripcion">
+            <form class="form-inscripcion__form">
+                <div class="group__field">
+                    <mat-form-field class="form-grupo__field">
+                        <mat-label>Fecha</mat-label>
+                        <input matInput [matDatepicker]="datepicker" formControlName="fechacreacion">
+                        <mat-datepicker #datepicker />
+                        <mat-datepicker-toggle [for]="datepicker" matSuffix />
+                    </mat-form-field>
+                    <mat-form-field class="form-inscripcion__field left">
+                        <mat-label>Monto total</mat-label>
+                        <input matInput formControlName="datosCurso" readonly />
+                    </mat-form-field>
+                    <mat-form-field class="form-inscripcion__field left">
+                        <mat-label>Observacion</mat-label>
+                        <input matInput formControlName="datosCurso" readonly />
+                    </mat-form-field>
+                    <mat-form-field class="form__inputs">
+                        <mat-label>Medio de pago</mat-label>
+                        <mat-select formControlName="idgruposmiembro">
+                            <mat-option [value]="grupo.idgruposmiembro">valor 1</mat-option>
+                            <mat-option [value]="grupo.idgruposmiembro">{{grupo.idgruposmiembro}} - {{
+                                grupo.nombredelgrupo}}</mat-option>
+
+                        </mat-select>
+                    </mat-form-field>
+                     <mat-form-field class="form-inscripcion__field left">
+                        <mat-label>Estudiante</mat-label>
+                        <input matInput formControlName="datosCurso" readonly />
+                    </mat-form-field>
+                </div>
+                <div class="group__field">
+                    <mat-form-field class="form-inscripcion__field right">
+                        <mat-label>DNI</mat-label>
+                        <input matInput formControlName="dni" required="required" />
+
+                    </mat-form-field>
+
+                </div>
+
+
+                <button [disabled]="" class="form__btn--save">
+                    Guardar
+                </button>
+                <button matButton>Cancelar</button>
+
+            </form>
+        </div>
+    </mat-dialog-content>
+
+</div>
