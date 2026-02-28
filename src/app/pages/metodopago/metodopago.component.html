@@ -9,7 +9,10 @@
     </div>
     <mat-dialog-content>
         <div class="metodopago__form">
-            <app-addmetodopago></app-addmetodopago>
+            <app-addmetodopago (metodoPagoGuardado)="agregarMetodoDePago($event)"
+                (nombreIngresado)="buscarMetoDePago($event)">
+
+            </app-addmetodopago>
         </div>
         <div class="metodopago__report">
             @if (cargando==true) {
@@ -38,7 +41,7 @@
                         {{ metodopago.descripcion }}
                     </td>
                 </ng-container>
-                
+
                 <!-- Acciones -->
                 <ng-container matColumnDef="acciones">
                     <th mat-header-cell *matHeaderCellDef class="custom-table__header">Acciones</th>
@@ -63,7 +66,7 @@
         </div>
     </mat-dialog-content>
 
-  
+
 
 
 </div>

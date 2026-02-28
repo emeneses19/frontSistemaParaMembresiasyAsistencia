@@ -1,4 +1,3 @@
-
 /* Seccion Card */
 .section-card {
   background: white;
@@ -7,13 +6,14 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   margin-bottom: 1.5rem;
 }
-.secction-membresia{
+
+.secction-membresia {
   display: flex;
   justify-content: space-between;
 }
 
 .membresia-grid {
-  flex: 1; 
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -22,30 +22,33 @@
 
 
 .membresia-card {
-  padding: 0.5rem 1rem; 
-  min-height: 60px;  
+  padding: 0.5rem 1rem;
+  min-height: 60px;
   max-width: 800px;
-  border-radius: 0.5rem; /* Bordes un poco más finos */
+  border-radius: 0.5rem;
+  /* Bordes un poco más finos */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
+
 .membresia-card mat-card-title {
-  font-size: 1rem ; 
-  margin: 0 ;
+  font-size: 1rem;
+  margin: 0;
 }
 
 .membresia-card mat-card-subtitle {
-  font-size: 0.8rem ;
-  margin: 0 ;
+  font-size: 0.8rem;
+  margin: 0;
 }
 
 
-.membresia-card:hover{
-  border: solid var( --color-success-dark);
+.membresia-card:hover {
+  border: solid var(--color-success-dark);
 }
-.membresia-detalle{
+
+.membresia-detalle {
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -56,16 +59,18 @@
   color: #dc2626;
   font-weight: 500;
 }
+
 .month-status.pagado {
   color: #6C757D;
   font-weight: 500;
 }
+
 .month-status.pending {
   color: #ffc107;
   font-weight: 500;
 }
 
-.monto-pagar{
+.monto-pagar {
   font-weight: 600;
 }
 
@@ -189,7 +194,8 @@
   margin-top: 1rem;
   font-weight: 600;
 }
-.membresia-precio{
+
+.membresia-precio {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -199,29 +205,37 @@
 .descricion-input {
   color: #6b7280;
 }
+
+//
+
 /* Responsive */
 /* Tabletas y Laptops pequeñas */
 @media (max-width: 1024px) {
   .secction-membresia {
-    flex-direction: column; /* Apila lista arriba y resumen abajo */
+    flex-direction: column;
+    /* Apila lista arriba y resumen abajo */
     gap: 2rem;
   }
 
   .payment-summary {
-    width: 100%; /* El resumen ocupa todo el ancho en móviles */
-    position: static; /* Quita el sticky en móviles */
+    width: 100%;
+    /* El resumen ocupa todo el ancho en móviles */
+    position: static;
+    /* Quita el sticky en móviles */
   }
 }
 
 /* Celulares */
 @media (max-width: 600px) {
   .membresia-card {
-    flex-direction: column; /* El precio baja si no hay espacio */
+    flex-direction: column;
+    /* El precio baja si no hay espacio */
     align-items: flex-start;
     gap: 1rem;
   }
-  
+
   .membresia-precio {
-    align-self: flex-end; /* El precio se queda a la derecha aunque esté abajo */
+    align-self: flex-end;
+    /* El precio se queda a la derecha aunque esté abajo */
   }
 }

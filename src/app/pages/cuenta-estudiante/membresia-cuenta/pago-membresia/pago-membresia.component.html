@@ -1,53 +1,74 @@
-<div class="inscripcion">
-
+<div class="pagoMembresia">
+    <div class="pagoMembresia__header">
+        <h2 mat-dialog-title>Lista de Medios de pago</h2>
+        <mat-dialog-actions>
+            <button mat-dialog-close aria-label="close">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-dialog-actions>
+    </div>
     <mat-dialog-content>
-        <div class="form-inscripcion">
-            <form class="form-inscripcion__form">
-                <div class="group__field">
-                    <mat-form-field class="form-grupo__field">
+        <div class="form-pagoMembresia">
+            <form [formGroup]="pagoMembresiaForm" class="form-pagoMembresia__form" (ngSubmit)="procesarPago()">
+                <div class="fields-grid">
+                    <mat-form-field>
+                        <mat-label>Serie</mat-label>
+                        <input matInput formControlName="seriecorrelativopagomembresia"
+                            style="text-transform: uppercase;"
+                            (input)="pagoMembresiaForm.get('seriecorrelativopagomembresia')?.setValue($any($event.target).value.toUpperCase())" />
+                        @if (pagoMembresiaForm.get('seriecorrelativopagomembresia')?.hasError('required')) {
+                        <mat-error>Campo obligatorio</mat-error>
+                        }
+                        @if (pagoMembresiaForm.get('seriecorrelativopagomembresia')?.hasError('maxlength')) {
+                        <mat-error>No debe superar 10 caracteres</mat-error>
+                        }
+                    </mat-form-field>
+                    <mat-form-field>
                         <mat-label>Fecha</mat-label>
-                        <input matInput [matDatepicker]="datepicker" formControlName="fechacreacion">
+                        <input matInput [matDatepicker]="datepicker" formControlName="fecha">
                         <mat-datepicker #datepicker />
                         <mat-datepicker-toggle [for]="datepicker" matSuffix />
-                    </mat-form-field>
-                    <mat-form-field class="form-inscripcion__field left">
-                        <mat-label>Monto total</mat-label>
-                        <input matInput formControlName="datosCurso" readonly />
-                    </mat-form-field>
-                    <mat-form-field class="form-inscripcion__field left">
-                        <mat-label>Observacion</mat-label>
-                        <input matInput formControlName="datosCurso" readonly />
+                        @if (pagoMembresiaForm.get('fecha')?.hasError('required')) {
+                        <mat-error>Campo obligatorio</mat-error>
+                        }
                     </mat-form-field>
                     <mat-form-field class="form__inputs">
                         <mat-label>Medio de pago</mat-label>
-                        <mat-select formControlName="idgruposmiembro">
-                            <mat-option [value]="grupo.idgruposmiembro">valor 1</mat-option>
-                            <mat-option [value]="grupo.idgruposmiembro">{{grupo.idgruposmiembro}} - {{
-                                grupo.nombredelgrupo}}</mat-option>
-
+                        <mat-select formControlName="idmetodosdepago" required>
+                            @for (metodo of metodosDePago; track $index) {
+                            <mat-option [value]="metodo.idmetodosdepago">{{metodo.idmetodosdepago}} -
+                                {{metodo.nombre}}</mat-option>
+                            }
                         </mat-select>
+                        @if (pagoMembresiaForm.get('idmetodosdepago')?.hasError('required')) {
+                        <mat-error>Campo obligatorio</mat-error>
+                        }
                     </mat-form-field>
-                     <mat-form-field class="form-inscripcion__field left">
-                        <mat-label>Estudiante</mat-label>
-                        <input matInput formControlName="datosCurso" readonly />
+                    <mat-form-field class="form-pagoMembresia__field left">
+                        <mat-label>Monto total</mat-label>
+                        <input matInput formControlName="montotal" readonly />
+                        <span matPrefix>S/&nbsp;</span>
+                        @if (pagoMembresiaForm.get('montotal')?.hasError('required')) {
+                        <mat-error>Campo obligatorio</mat-error>
+                        }
+                    </mat-form-field>
+                    <mat-form-field class="form-pagoMembresia__field left">
+                        <mat-label>Observacion</mat-label>
+                        <textarea matInput formControlName="observacion" rows="2"></textarea>
                     </mat-form-field>
                 </div>
-                <div class="group__field">
-                    <mat-form-field class="form-inscripcion__field right">
-                        <mat-label>DNI</mat-label>
-                        <input matInput formControlName="dni" required="required" />
 
-                    </mat-form-field>
+                <mat-dialog-actions class="pago-actions">
+                    <button [disabled]="pagoMembresiaForm.invalid" class="form__btn--save">
+                        Procesar
+                    </button>
+                    <button mat-button mat-dialog-close aria-label="close">
+                        Cancelar
+                    </button>
 
-                </div>
-
-
-                <button [disabled]="" class="form__btn--save">
-                    Guardar
-                </button>
-                <button matButton>Cancelar</button>
-
+                </mat-dialog-actions>
             </form>
+
         </div>
     </mat-dialog-content>
 

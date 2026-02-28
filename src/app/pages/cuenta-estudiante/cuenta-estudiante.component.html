@@ -6,7 +6,7 @@
         </button>
         <h2>Estado de cuenta</h2>
     </div>
-    @if (cargando==true) {
+    @if (cargandoEstudiante==true) {
     <div class="loading-spinner">
         <div class="spinner"></div>
         <p class="loading-spinner__text">Cargando...</p>
@@ -22,12 +22,14 @@
                 <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
                     <mat-expansion-panel-header>
                         <mat-panel-title>Membresias </mat-panel-title>
-                         <mat-panel-description>
+                        <mat-panel-description>
                             Click para {{panelOpenState() ? 'ocultar detalles' : 'más detalles'}}
                         </mat-panel-description>
                     </mat-expansion-panel-header>
-                    <app-membresia-cuenta  [listaDeMembresiasDelEstudiante]="listaDeMembresiasDelEstudiante" ></app-membresia-cuenta>
-                    
+                    <app-membresia-cuenta [dni]="dniObtenida">
+                    </app-membresia-cuenta>
+
+
                 </mat-expansion-panel>
                 <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
                     <mat-expansion-panel-header>

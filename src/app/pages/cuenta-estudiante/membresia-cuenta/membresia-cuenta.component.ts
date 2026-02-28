@@ -1,4 +1,4 @@
-import { Component, inject, Input, input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MATERIAL_IMPORTS } from '../../../shared/material.imports';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -9,6 +9,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog';
 import { PagoMembresiaComponent } from './pago-membresia/pago-membresia.component';
+import { PagoMembresiaPayload } from '../../../interfaces/pago-membresia';
+import { EstudianteModel } from '../../../models/Estudiantes';
+import { ReporteMembresiasEstudianteService } from '../../../services/reporte-membresias-estudiante.service';
+import { PagoMembresiaService } from '../../../services/pago-membresia.service';
+import { SuccesDialogService } from '../../../services/succes-dialog.service';
 
 
 @Component({
@@ -26,6 +31,7 @@ import { PagoMembresiaComponent } from './pago-membresia/pago-membresia.componen
   styleUrl: './membresia-cuenta.component.scss'
 })
 export class MembresiaCuentaComponent implements OnInit, OnChanges {
+  listaDeMembresiasDelEstudiante!: ReporteMembresiaEstudianteData;
   totalListaSoloMembresias: MembresiaModel[] = [];
   deudaTotalGlobal: number = 0;
   tamanioPagina = 6;
@@ -35,39 +41,93 @@ export class MembresiaCuentaComponent implements OnInit, OnChanges {
   cantidadSeleccionadas: number = 0;
   listadeMembresiasSeleccionadas: MembresiaModel[] = [];
   readonly dialogProcesarPago = inject(MatDialog);
+  private succesDialogService = inject(SuccesDialogService);
 
-  @Input() listaDeMembresiasDelEstudiante!: ReporteMembresiaEstudianteData;
-  constructor() {
+  @Input() dni!: string;
+  constructor(
+    private _reporteMembresiasEstudiante: ReporteMembresiasEstudianteService,
+    private _pagoMembresiaService: PagoMembresiaService
+  ) {
   }
   ngOnInit(): void {
-    this.aplicarPaginacion();
+    if (this.dni) {
+      this.obtenerMembresia(this.dni);
+      console.log(this.dni, 'DNI aqui al inciar hijo');
+    }
 
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['listaDeMembresiasDelEstudiante'] && this.listaDeMembresiasDelEstudiante) {
-      this.ProcesarDatosMembresias();
+    //   if (changes['dni']) {
+    //     this.ProcesarDatosMembresias();
+    //     this.aplicarPaginacion();
+    //     console.log("aqui va mi prueba si se va reflejando o no ", this.dni);
 
-    }
+    //   }
+  }
+  //abrir el formulario para procesar pago 
+  abrirProcesarPagoMembresia() {
+    const dialogRef = this.dialogProcesarPago.open(PagoMembresiaComponent, {
+      data: {
+        membresias: this.listadeMembresiasSeleccionadas,
+        total: this.totalSeleccionado
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log("Datos recibidos payload pagomembresias", result);
+        //enviando al padre el payload
+        this.procesarPagoMembresia(result);
+
+      }
+    })
+  }
+  //Procesar pago membresia
+  procesarPagoMembresia(payload: PagoMembresiaPayload) {
+    this._pagoMembresiaService.procesarPagoMembresia(payload).subscribe({
+      next: (result) => {
+        console.log(result);
+        this.succesDialogService.openSuccessDialog('CORRECTO', 'Pago registrado con éxito', 'Aceptar');
+        console.log(this.listaMembresiasPaginada, 'listapaginada despues de guardar')
+        this.listadeMembresiasSeleccionadas = [];
+        this.totalSeleccionado = 0;
+        this.cantidadSeleccionadas = 0;
+        this.obtenerMembresia(this.dni);
+        console.log(this.listaMembresiasPaginada, 'listapaginada despues de guardar')
+      },
+      error: (err) => {
+        console.log('Error al procesar el pago membresia: ', err);
+      }
+    })
   }
 
-  //abrir el formulario para procesar pago 
-  abrirProcesarPagoMembresia(){
-      const dialogRef = this.dialogProcesarPago.open(PagoMembresiaComponent,{
-        
-      })
-    }
   //manejar seleccion de membresias
   membresiasSeleccionada(membresia: MembresiaModel) {
     this.calcularTotalPagar();
 
   }
   //metodo para calcular el total de selccionad
-  calcularTotalPagar(){
-    const seleccionados = this.totalListaSoloMembresias.filter(membresia=>membresia.seleccionada);
+  calcularTotalPagar() {
+    const seleccionados = this.totalListaSoloMembresias.filter(membresia => membresia.seleccionada);
     this.cantidadSeleccionadas = seleccionados.length;
     this.listadeMembresiasSeleccionadas = seleccionados;
     this.totalSeleccionado = seleccionados.reduce((acumulador, m) => acumulador + (m.montoAbonar || 0), 0);
   }
+
+  //Obteniendo lista de membresias del estudiante
+
+  obtenerMembresia(dni: string) {
+    this._reporteMembresiasEstudiante.obtenerListaMembresiasParaEstudiante(dni).subscribe({
+      next: (data) => {
+        this.listaDeMembresiasDelEstudiante = data;
+        this.ProcesarDatosMembresias();
+        console.log('solo membresias,', this.totalListaSoloMembresias);
+        console.log('el total global,', this.deudaTotalGlobal);
+      }
+
+
+    })
+  }
+
 
 
   //validar el monto a pagar
@@ -121,25 +181,32 @@ export class MembresiaCuentaComponent implements OnInit, OnChanges {
 
   ProcesarDatosMembresias() {
     if (this.listaDeMembresiasDelEstudiante) {
-      this.totalListaSoloMembresias = this.listaDeMembresiasDelEstudiante.membresias.map(membresia => {
-        return {
+      this.listadeMembresiasSeleccionadas = [];
+      this.totalSeleccionado = 0;
+      this.cantidadSeleccionadas = 0;
+
+      this.totalListaSoloMembresias =
+        this.listaDeMembresiasDelEstudiante.membresias.map(membresia => ({
           ...membresia,
           seleccionada: false,
           montoAbonar: membresia.montoesperado - membresia.montopagado,
+        }));
 
-        }
+      this.deudaTotalGlobal =
+        this.listaDeMembresiasDelEstudiante.deudaTotal;
 
-      })
-      this.deudaTotalGlobal = this.listaDeMembresiasDelEstudiante.deudaTotal;
       this.indexPagina = 0;
+
       this.aplicarPaginacion();
+      console.log(this.listaMembresiasPaginada, 'Este es la lista pagina despues de procesar datos');
 
     }
   }
+
   aplicarPaginacion(): void {
     const inicioIndex = this.indexPagina * this.tamanioPagina;
     const finalIndex = inicioIndex + this.tamanioPagina;
-    this.listaMembresiasPaginada = this.totalListaSoloMembresias.slice(inicioIndex, finalIndex);
+    this.listaMembresiasPaginada = [...this.totalListaSoloMembresias.slice(inicioIndex, finalIndex)];
   }
 
   manejarCambioDePagina(event: PageEvent): void {

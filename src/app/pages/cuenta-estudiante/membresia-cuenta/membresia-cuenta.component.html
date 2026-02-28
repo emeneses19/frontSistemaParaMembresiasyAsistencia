@@ -2,7 +2,7 @@
     <div class="secction-membresia">
         <!-- Lista de Membresias -->
         <div class="membresia-grid">
-            @for (membresia of listaMembresiasPaginada; track $index) {
+            @for (membresia of listaMembresiasPaginada; track membresia.idmembresia) {
             <mat-card class="membresia-card" appearance="outlined">
                 <div class="membresia-detalle">
                     @if (membresia.montoesperado - membresia.montopagado > 0) {
@@ -14,26 +14,34 @@
                     <div class="membresia-info">
                         <mat-card-title> {{membresia.descripcionmembresia}} <span> | Total:
                                 S/{{membresia.montoesperado}} </span></mat-card-title>
-                        <mat-card-subtitle [ngClass]="getClassFecha(membresia)" class="month-status">Vence:
+                        <mat-card-subtitle [ngClass]="getClassFecha(membresia)" class="month-status">
+                            Vence:
                             {{membresia.fechalimitedepago |
                             date:'dd/MM/yyyy' }}</mat-card-subtitle>
-                        <mat-card-subtitle>
-                            Pagado: S/{{membresia.montopagado}} |
-                            <span class="monto-pagar">Pendiente: S/{{membresia.montoesperado -
-                                membresia.montopagado}}</span>
+                        <mat-card-subtitle class="info-pago-container">
+                            <div class="periodo-badge">
+                                <span> Cobertura: {{membresia.fechainicio | date:'dd MMM'}} -
+                                    {{membresia.fechavencimientosugerida |
+                                    date:'dd MMM'}}</span>
+                            </div>
+
+                            <div class="montos-group">
+                                <span class="monto-item pagado">
+                                    Pagado: <strong>S/{{membresia.montopagado}}</strong>
+                                </span>
+
+                                <span class="monto-item pendiente">
+                                    Pendiente: <strong>S/{{membresia.montoesperado - membresia.montopagado}}</strong>
+                                </span>
+                            </div>
                         </mat-card-subtitle>
                     </div>
                 </div>
                 <div class="membresia-precio">
                     @if (membresia.montoesperado - membresia.montopagado > 0) {
-                    <input 
-                    type="text"
-                    class="input-pago" 
-                    (keypress)="soloNumeros($event)"
-                    (input)="validarMonto($event, membresia)" 
-                    [disabled]="membresia.seleccionada"
-                    [value]="membresia.montoAbonar"
-                    />
+                    <input type="text" class="input-pago" (keypress)="soloNumeros($event)"
+                        (input)="validarMonto($event, membresia)" [disabled]="membresia.seleccionada"
+                        [value]="membresia.montoAbonar" />
                     <small class="descricion-input">Monto a pagar</small>
                     }
                 </div>
@@ -43,6 +51,7 @@
             <span class="deuda-global">
                 Deuda total pendiente: S/{{ deudaTotalGlobal }}
             </span>
+            <button (click)="obtenerMembresia(dni)">REFRESCAR REPORTE</button>
 
 
             <div class="pagination-container">
@@ -73,10 +82,8 @@
                 <span class="total-amount"> S/ {{totalSeleccionado | number:'1.2-2'}}</span>
             </div>
 
-            <button 
-                    class="form__btn--save"
-                    [disabled]="cantidadSeleccionadas<=0 && totalSeleccionado<=0"
-                    (click)="abrirProcesarPagoMembresia()">
+            <button class="form__btn--save" [disabled]="cantidadSeleccionadas<=0 && totalSeleccionado<=0"
+                (click)="abrirProcesarPagoMembresia()">
                 Pagar
             </button>
         </div>
