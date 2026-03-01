@@ -9,10 +9,10 @@ import { response } from 'express';
 })
 export class ReporteMembresiasEstudianteService {
   URL = 'http://localhost:3000/membresias';
-  // private membresiaSubject = new BehaviorSubject<ReporteMembresiaEstudianteData | null>(null);
-  // membresias$ = this.membresiaSubject.asObservable();
+
 
   constructor(private _http: HttpClient) { }
+
 
   obtenerListaMembresiasParaEstudiante(dni: string): Observable<ReporteMembresiaEstudianteData> {
     return this._http.get<ReporteMembresiaEstudianteData>(`${this.URL}/todo/${dni}`);

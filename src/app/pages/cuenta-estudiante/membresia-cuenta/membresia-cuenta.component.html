@@ -1,8 +1,13 @@
 <div class="section-card">
     <div class="secction-membresia">
+        @if (_store.cargando$ | async) {
+        <div>
+            Cargando...
+        </div>
+        }
         <!-- Lista de Membresias -->
         <div class="membresia-grid">
-            @for (membresia of listaMembresiasPaginada; track membresia.idmembresia) {
+            @for (membresia of listaMembresiasPaginada; track $index) {
             <mat-card class="membresia-card" appearance="outlined">
                 <div class="membresia-detalle">
                     @if (membresia.montoesperado - membresia.montopagado > 0) {
@@ -48,10 +53,11 @@
             </mat-card>
             }
             <!-- Deuda Global -->
+            @if (_store.reporte$ | async; as reporte) {
             <span class="deuda-global">
-                Deuda total pendiente: S/{{ deudaTotalGlobal }}
+                Deuda total pendiente: S/{{ reporte.deudaTotal }}
             </span>
-            <button (click)="obtenerMembresia(dni)">REFRESCAR REPORTE</button>
+            }
 
 
             <div class="pagination-container">

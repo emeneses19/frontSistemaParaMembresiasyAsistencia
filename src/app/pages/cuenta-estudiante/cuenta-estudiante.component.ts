@@ -59,27 +59,6 @@ export class CuentaEstudianteComponent implements OnInit {
 
   }
 
-  // procesarPagoMembresia(payload: PagoMembresiaPayload) {
-  //   this.cargandoPago = true;
-  //   this._pagoMembresiaService.procesarPagoMembresia(payload).subscribe({
-  //     next: () => {
-  //       this.cargandoPago = false;
-  //       this.dialogServiceSucces.openSuccessDialog(
-  //         'CORRECTO',
-  //         'pago realizado con éxito',
-  //         'Cerrar'
-  //       );
-  //       this._reporteMembresiasEstudiante.obtenerListaMembresiasParaEstudiante(this.dniObtenida)
-  //         .subscribe();
-  //     },
-  //     error: (err) => {
-  //       console.log("El error al guardar el pago", err);
-  //       this.cargandoPago = false;
-  //     }
-
-  //   })
-
-  // }
 
   obtenerDNIdesderoute() {
     this.route.paramMap.subscribe(params => {
