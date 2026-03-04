@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MATERIAL_IMPORTS, RouterLink,RouterModule],
+  imports: [MATERIAL_IMPORTS, RouterLink, RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -18,7 +18,7 @@ export class HeaderComponent {
     { label: 'Inicio', route: '/', active: true },
     { label: 'Cursos', route: '/cursos', active: false },
     { label: 'Estudiantes', route: '/estudiantes', active: false },
-    { label: 'E. Cuenta', route: '/lista-general', active: false },
+    { label: 'Pagos', route: '/pagos', active: false },
     { label: 'Asistencias', route: '/asistencias', active: false },
     { label: 'Auxiliar', route: '/auxiliar', active: false },
     { label: 'Configuración', route: '/configuracion', active: false }

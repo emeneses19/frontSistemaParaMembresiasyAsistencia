@@ -51,8 +51,6 @@ export class PagoMembresiaComponent implements OnInit {
   procesarPago() {
     if (this.pagoMembresiaForm.valid) {
       const payload: PagoMembresiaPayload = this.pagoMembresiaForm.value;
-
-      // Aquí llamarías a tu servicio para guardar en la base de datos
       console.log("JSON listo para enviar:", payload);
       this.dialogRef.close(payload);
     }

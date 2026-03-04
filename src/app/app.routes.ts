@@ -6,14 +6,15 @@ import { CursosComponent } from './pages/cursos/cursos.component';
 import { ConfiguracionComponent } from './pages/configuracion/configuracion.component';
 import { ListaGeneralEstudiantesComponent } from './pages/lista-general-estudiantes/lista-general-estudiantes.component';
 import { CuentaEstudianteComponent } from './pages/cuenta-estudiante/cuenta-estudiante.component';
+import { PagosComponent } from './pages/pagos/pagos.component';
 
 export const routes: Routes = [
     { path: '', component: InicioComponent },
-    {path: 'estudiantes', component:EstudiantesComponent},
-    {path: 'cursos', component:CursosComponent},
-    {path: 'lista-general', component:ListaGeneralEstudiantesComponent},
-    {path: 'asistencias', component:EstudiantesComponent},
-    {path: 'auxiliar', component:AuxiliarComponent},
-    {path: 'configuracion', component:ConfiguracionComponent},
-    {path: 'estado-cuenta/:dni', component:CuentaEstudianteComponent},
+    { path: 'estudiantes', component: EstudiantesComponent },
+    { path: 'cursos', component: CursosComponent },
+    { path: 'pagos', component: PagosComponent },
+    { path: 'asistencias', component: EstudiantesComponent },
+    { path: 'auxiliar', component: AuxiliarComponent },
+    { path: 'configuracion', component: ConfiguracionComponent },
+    { path: 'estado-cuenta/:dni', component: CuentaEstudianteComponent },
 ];

@@ -218,10 +218,8 @@
   }
 
   .payment-summary {
-    width: 100%;
-    /* El resumen ocupa todo el ancho en móviles */
+    width: 88%;
     position: static;
-    /* Quita el sticky en móviles */
   }
 }
 
@@ -236,6 +234,5 @@
 
   .membresia-precio {
     align-self: flex-end;
-    /* El precio se queda a la derecha aunque esté abajo */
   }
 }

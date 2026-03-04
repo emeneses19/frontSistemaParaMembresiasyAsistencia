@@ -1,6 +1,6 @@
-<div class="pagoMembresia">
-    <div class="pagoMembresia__header">
-        <h2 mat-dialog-title>Pagar de membresias selecciondas</h2>
+<div class="pagoCurso">
+    <div class="pagoCurso__header">
+        <h2 mat-dialog-title>Pagar de curso</h2>
         <mat-dialog-actions>
             <button mat-dialog-close aria-label="close">
                 <mat-icon>close</mat-icon>
@@ -8,27 +8,26 @@
         </mat-dialog-actions>
     </div>
     <mat-dialog-content>
-        <div class="form-pagoMembresia">
-            <form [formGroup]="pagoMembresiaForm" class="form-pagoMembresia__form" (ngSubmit)="procesarPago()">
+        <div class="form-pagoCurso">
+            <form [formGroup]="pagoCursoForm" class="form-pagoCurso__form" (ngSubmit)="procesarPago()">
                 <div class="fields-grid">
                     <mat-form-field>
                         <mat-label>Serie</mat-label>
-                        <input matInput formControlName="seriecorrelativopagomembresia"
-                            style="text-transform: uppercase;"
-                            (input)="pagoMembresiaForm.get('seriecorrelativopagomembresia')?.setValue($any($event.target).value.toUpperCase())" />
-                        @if (pagoMembresiaForm.get('seriecorrelativopagomembresia')?.hasError('required')) {
+                        <input matInput formControlName="numeroserie" style="text-transform: uppercase;"
+                            (input)="pagoCursoForm.get('numeroserie')?.setValue($any($event.target).value.toUpperCase())" />
+                        @if (pagoCursoForm.get('numeroserie')?.hasError('required')) {
                         <mat-error>Campo obligatorio</mat-error>
                         }
-                        @if (pagoMembresiaForm.get('seriecorrelativopagomembresia')?.hasError('maxlength')) {
+                        @if (pagoCursoForm.get('numeroserie')?.hasError('maxlength')) {
                         <mat-error>No debe superar 10 caracteres</mat-error>
                         }
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Fecha</mat-label>
-                        <input matInput [matDatepicker]="datepicker" formControlName="fecha">
+                        <input matInput [matDatepicker]="datepicker" formControlName="fechapago">
                         <mat-datepicker #datepicker />
                         <mat-datepicker-toggle [for]="datepicker" matSuffix />
-                        @if (pagoMembresiaForm.get('fecha')?.hasError('required')) {
+                        @if (pagoCursoForm.get('fechapago')?.hasError('required')) {
                         <mat-error>Campo obligatorio</mat-error>
                         }
                     </mat-form-field>
@@ -40,26 +39,26 @@
                                 {{metodo.nombre}}</mat-option>
                             }
                         </mat-select>
-                        @if (pagoMembresiaForm.get('idmetodosdepago')?.hasError('required')) {
+                        @if (pagoCursoForm.get('idmetodosdepago')?.hasError('required')) {
                         <mat-error>Campo obligatorio</mat-error>
                         }
                     </mat-form-field>
-                    <mat-form-field class="form-pagoMembresia__field left">
+                    <mat-form-field class="form-pagoCurso__field left">
                         <mat-label>Monto total</mat-label>
-                        <input matInput formControlName="montotal" readonly />
+                        <input matInput formControlName="montototal" readonly />
                         <span matPrefix>S/&nbsp;</span>
-                        @if (pagoMembresiaForm.get('montotal')?.hasError('required')) {
+                        @if (pagoCursoForm.get('montototal')?.hasError('required')) {
                         <mat-error>Campo obligatorio</mat-error>
                         }
                     </mat-form-field>
-                    <mat-form-field class="form-pagoMembresia__field left">
+                    <mat-form-field class="form-pagoCurso__field left">
                         <mat-label>Observacion</mat-label>
-                        <textarea matInput formControlName="observacion" rows="2"></textarea>
+                        <textarea matInput formControlName="observaciones" rows="2"></textarea>
                     </mat-form-field>
                 </div>
 
                 <mat-dialog-actions class="pago-actions">
-                    <button [disabled]="pagoMembresiaForm.invalid" class="form__btn--save">
+                    <button [disabled]="pagoCursoForm.invalid" class="form__btn--save">
                         Procesar
                     </button>
                     <button mat-button mat-dialog-close aria-label="close">

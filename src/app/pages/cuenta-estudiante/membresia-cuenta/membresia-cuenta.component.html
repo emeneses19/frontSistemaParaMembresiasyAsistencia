@@ -74,25 +74,32 @@
 
         <!-- Resumen de Pago (Sidebar o Card Flotante) -->
         <div class="payment-summary">
-            <h3 class="summary-title">Resumen de pagos</h3>
+            <div class="">
+                <h3 class="summary-title">Resumen de pagos</h3>
 
-            <div class="summary-row">
-                <span>Membresías seleccionadas</span>
-                <span class="summary-value">: {{cantidadSeleccionadas}}</span>
+                <div class="summary-row">
+                    <span>Membresías seleccionadas</span>
+                    <span class="summary-value">: {{cantidadSeleccionadas}}</span>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-total">
+                    <span>Total a pagar: </span>
+                    <span class="total-amount"> S/ {{totalSeleccionado | number:'1.2-2'}}</span>
+                </div>
+
+                <button class="form__btn--save" [disabled]="cantidadSeleccionadas<=0 && totalSeleccionado<=0"
+                    (click)="abrirProcesarPagoMembresia()">
+                    Pagar
+                </button>
             </div>
+            <a href="">
+                Ver los ultimos pagos
+            </a>
 
-            <div class="summary-divider"></div>
-
-            <div class="summary-total">
-                <span>Total a pagar: </span>
-                <span class="total-amount"> S/ {{totalSeleccionado | number:'1.2-2'}}</span>
-            </div>
-
-            <button class="form__btn--save" [disabled]="cantidadSeleccionadas<=0 && totalSeleccionado<=0"
-                (click)="abrirProcesarPagoMembresia()">
-                Pagar
-            </button>
         </div>
+
 
     </div>
 

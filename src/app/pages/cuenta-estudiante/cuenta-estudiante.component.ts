@@ -8,13 +8,10 @@ import { EstudianteService } from '../../services/estudiante.service';
 import { EstudianteModel } from '../../models/Estudiantes';
 import { ReporteCursosEstudianteService } from '../../services/reporte-cursos-estudiante.service';
 import { ReportCursosEstudianteData } from '../../interfaces/cursos-estudiante-report';
-import { ReporteMembresiaEstudianteData } from '../../interfaces/membresia-estudiante-reports';
-import { ReporteMembresiasEstudianteService } from '../../services/reporte-membresias-estudiante.service';
-import { PagoMembresiaPayload } from '../../interfaces/pago-membresia';
-import { PagoMembresiaService } from '../../services/pago-membresia.service';
 import { SuccesDialogService } from '../../services/succes-dialog.service';
-import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { PagoCursoService } from '../../services/pago-curso.service';
+import { PagoCursoData } from '../../interfaces/pago-curso-data';
 
 @Component({
   selector: 'app-cuenta-estudiante',
@@ -39,14 +36,13 @@ export class CuentaEstudianteComponent implements OnInit {
   cargandoPago: boolean = false;
   cargandoEstudiante: boolean = false;
   listaDeCursosDelEstudiante: ReportCursosEstudianteData[] = []
-  // listaDeMembresiasDelEstudiante$!: Observable<ReporteMembresiaEstudianteData>;
 
   private dialogServiceSucces = inject(SuccesDialogService);
 
   constructor(
     private route: ActivatedRoute,
     private _estudianteService: EstudianteService,
-    private _reporteCursosEstudiante: ReporteCursosEstudianteService,
+
 
   ) {
 
@@ -54,10 +50,9 @@ export class CuentaEstudianteComponent implements OnInit {
 
   ngOnInit() {
     this.obtenerDNIdesderoute();
-    this.obtenerCursosParaElEstudiante(this.dniObtenida);
-
 
   }
+
 
 
   obtenerDNIdesderoute() {
@@ -81,11 +76,7 @@ export class CuentaEstudianteComponent implements OnInit {
 
   }
 
-  obtenerCursosParaElEstudiante(dni: string) {
-    this._reporteCursosEstudiante.obtenerListaDeCursosParaEstudiante(dni).subscribe(cursos => {
-      this.listaDeCursosDelEstudiante = cursos;
-    });
-  }
+
 
 
 

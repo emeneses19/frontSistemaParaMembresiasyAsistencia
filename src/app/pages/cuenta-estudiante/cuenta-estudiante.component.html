@@ -1,6 +1,6 @@
 <div class="estado-cuenta-estudiante">
     <div class="title">
-        <button mat-stroked-button color="primary" [routerLink]="['/lista-general']">
+        <button mat-stroked-button color="primary" [routerLink]="['/pagos']">
             <mat-icon>arrow_back</mat-icon>
             volver alista general
         </button>
@@ -38,7 +38,7 @@
                             Click para {{panelOpenState() ? 'ocultar detalles' : 'más detalles'}}
                         </mat-panel-description>
                     </mat-expansion-panel-header>
-                    <app-curso-cuenta [listaDeCursosDeEstudiante]="listaDeCursosDelEstudiante"></app-curso-cuenta>
+                    <app-curso-cuenta [dni]="dniObtenida"></app-curso-cuenta>
                 </mat-expansion-panel>
             </mat-accordion>
 

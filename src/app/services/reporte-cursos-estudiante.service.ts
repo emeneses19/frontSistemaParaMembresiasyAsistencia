@@ -7,14 +7,15 @@ import { ReportCursosEstudianteData } from '../interfaces/cursos-estudiante-repo
   providedIn: 'root'
 })
 export class ReporteCursosEstudianteService {
-   URL='http://localhost:3000/estudiante-cursos';
+  URL = 'http://localhost:3000/estudiante-cursos';
 
   constructor(
     private _http: HttpClient
 
   ) { }
 
-  obtenerListaDeCursosParaEstudiante(dni:string): Observable<ReportCursosEstudianteData[]>{
+  obtenerListaDeCursosParaEstudiante(dni: string): Observable<ReportCursosEstudianteData[]> {
     return this._http.get<ReportCursosEstudianteData[]>(`${this.URL}/lista-cursos/${dni}`);
   }
 }
+
