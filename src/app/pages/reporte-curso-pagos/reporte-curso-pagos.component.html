@@ -1,10 +1,11 @@
 <div class="container-reporte">
     <div class="cabecer__reporte">
-        <app-cabecera-reporte-pagos></app-cabecera-reporte-pagos>
+        <app-cabecera-reporte-pagos (filtro)="manejarFiltroFechas($event)"></app-cabecera-reporte-pagos>
 
     </div>
     <div class="table__reporte">
-        <app-curso-pagos></app-curso-pagos>
+        <app-smart-table [datos]="dataReporte" [columnas]="columnas" [mostrarBusquedaGlobal]="true"
+            [mostrarPaginacion]="true"></app-smart-table>
     </div>
 
 </div>

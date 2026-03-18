@@ -1,21 +1,23 @@
 <div class="filtro">
     <div class="filtro__fechas">
-        <mat-form-field class="filtro__campo">
-            <mat-label>Fecha inicio</mat-label>
-            <input matInput [matDatepicker]="fechaInicio">
-            <mat-datepicker-toggle matIconSuffix [for]="fechaInicio"></mat-datepicker-toggle>
-            <mat-datepicker #fechaInicio></mat-datepicker>
-        </mat-form-field>
+        <form action="" [formGroup]="filtroForm" (ngSubmit)="buscar()">
+            <mat-form-field class="filtro__campo">
+                <mat-label>Fecha inicio</mat-label>
+                <input matInput [matDatepicker]="fechaInicio" formControlName="fechaInicio">
+                <mat-datepicker-toggle matIconSuffix [for]="fechaInicio"></mat-datepicker-toggle>
+                <mat-datepicker #fechaInicio></mat-datepicker>
+            </mat-form-field>
 
-        <mat-form-field class="filtro__campo">
-            <mat-label>Fecha fin</mat-label>
-            <input matInput [matDatepicker]="fechaFin">
-            <mat-datepicker-toggle matIconSuffix [for]="fechaFin"></mat-datepicker-toggle>
-            <mat-datepicker #fechaFin></mat-datepicker>
-        </mat-form-field>
-        <button class="form__btn--search">
-            Buscar
-        </button>
+            <mat-form-field class="filtro__campo">
+                <mat-label>Fecha fin</mat-label>
+                <input matInput [matDatepicker]="fechaFin" formControlName="fechaFin">
+                <mat-datepicker-toggle matIconSuffix [for]="fechaFin"></mat-datepicker-toggle>
+                <mat-datepicker #fechaFin></mat-datepicker>
+            </mat-form-field>
+            <button class="form__btn--search">
+                Buscar
+            </button>
+        </form>
     </div>
 
     <div class="filtro__acciones">
