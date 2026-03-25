@@ -1,0 +1,73 @@
+<div class="detalle-pago-curso">
+    <div class="header-dialog">
+        <h2 mat-dialog-title>Detalle de pago</h2>
+        <button mat-icon-button mat-dialog-close title="Cerrar">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content class="content-dialog">
+        <div class="acciones-secundarias">
+            <button mat-stroked-button color="primary" (click)="previsualizar()">
+                <mat-icon>picture_as_pdf</mat-icon>
+                PDF
+            </button>
+
+            <button mat-stroked-button class="btn-whatsapp" (click)="compartirWhatsapp()">
+                <mat-icon>share</mat-icon>
+                WhatsApp
+            </button>
+        </div>
+        <div class="card-resumen">
+            <div class="row">
+                <div class="col">
+                    <span>Documento: <strong>{{data.serie}} - {{data.numerocorrelativo}}</strong></span>
+                </div>
+                <div class="col">
+                    <span>
+                        Monto Total: <strong class="total">{{data.montoTotalPago | currency:'PEN':'S/ '}}</strong>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span>Fecha: {{ data.fechapago | date:'dd/MM/yyyy' }}</span>
+
+                </div>
+                <div class="col">
+                    <div class="info-item" [ngClass]="data.estado === 'Anulado' ? 'text-error' : 'text-success'">
+
+                        <span>Estado: {{ data.estado || 'Activo' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-estudiante">
+            <span class="subtitulo-seccion">INFORMACIÓN DEL ESTUDIANTE</span>
+            <div class="estudiante-datos">
+                <span class="estudiante-dni">DNI: <strong>{{ data.dni }} - {{ data.nombres | uppercase}} {{
+                        data.apellidos | uppercase }}
+                    </strong></span>
+            </div>
+        </div>
+
+
+    </mat-dialog-content>
+    <mat-divider></mat-divider>
+    <mat-dialog-actions align="end">
+        <div class="acciones">
+            <button mat-button mat-dialog-close color="primary">Cerrar</button>
+        </div>
+        <span class="spacer"></span>
+        <div class="acciones">
+            <button mat-button color="warn" [mat-dialog-close]="'anular'" [disabled]="data.estado === 'Anulado'">
+                <mat-icon>block</mat-icon>
+                Anular Pago
+            </button>
+
+            <button mat-raised-button color="primary" [mat-dialog-close]="'imprimir'" cdkFocusInitial>
+                <mat-icon>print</mat-icon>
+                Imprimir Recibo
+            </button>
+        </div>
+    </mat-dialog-actions>
+</div>

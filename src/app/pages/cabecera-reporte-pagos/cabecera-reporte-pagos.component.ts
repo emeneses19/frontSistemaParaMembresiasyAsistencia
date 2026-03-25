@@ -8,6 +8,7 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { DateValidators } from '../../shared/validators/datevalidators';
 
 
 @Component({
@@ -28,8 +29,8 @@ export class CabeceraReportePagosComponent implements OnInit {
 
   ngOnInit(): void {
     this.filtroForm = this.fb.group({
-      fechaInicio: [new Date, [Validators.required]],
-      fechaFin: [new Date, [Validators.required]]
+      fechaInicio: [new Date, [Validators.required, DateValidators.fechasOrdenadas]],
+      fechaFin: [new Date, [Validators.required, DateValidators.fechasOrdenadas]]
     });
   }
 

@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
+import { DatePipe, CurrencyPipe, NgClass } from '@angular/common';
 
 
 @Component({
@@ -22,7 +23,10 @@ import { MatInputModule } from '@angular/material/input';
     MatIconModule,
     MatMenuModule,
     MatCheckboxModule,
-    MatInputModule
+    MatInputModule,
+    DatePipe,
+    CurrencyPipe,
+    NgClass
   ],
   templateUrl: './smart-table.component.html',
   styleUrl: './smart-table.component.scss'
@@ -38,129 +42,63 @@ export class SmartTableComponent<T> implements OnInit, OnChanges {
   @Input() mostrarBusquedaGlobal: boolean = true;
   @Input() mostrarPaginacion: boolean = true;
 
+  //para resaltar las columnas segun estado
+  @Input() claveColumnaEstado: string = '';
+  @Input() valorEstado: string = '';
+  @Input() colorResaltado: string = '#ffebee';
+  @Input() colorTextoResaltado: string = '';
+
+
   //para filtro por columna
   filtrosPorColumna: { [key: string]: string } = {};
   filtroGlobal: string = '';
   ngAfterViewInit(): void {
-    if (this.mostrarPaginacion && this.paginador) {
-      this.fuenteDatos.paginator = this.paginador;
-    }
-
-    if (this.ordenamiento) {
-      this.fuenteDatos.sort = this.ordenamiento;
-    }
+    this.vincularPaginacionYOrden();
   }
 
+  get columnasActivas(): TableColumn<T>[] {
+    return this.columnas.filter(col => col.visible !== false);
+  }
+
+  get nombresColumnasVisibles(): string[] {
+    return this.columnasActivas.map(col => col.clave.toString());
+  }
+
+  get nombresColumnasFiltro(): string[] {
+    return this.columnasActivas.map(col => 'filtro_' + col.clave.toString());
+  }
+
+  //Para vver detalle
+  emitirAccion(nombreAccion: string, fila: T): void {
+    this.accionEmitida.emit({ accion: nombreAccion, fila: fila });
+  }
+
+  // --- CICLO DE VIDA ---
 
   ngOnInit(): void {
-    this.inicializarTabla();
-
-
+    this.fuenteDatos = new MatTableDataSource(this.datos);
+    this.configurarFiltroPersonalizado();
   }
+
+
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['datos'] && this.fuenteDatos) {
       this.fuenteDatos.data = this.datos;
     }
-
-    if (changes['columnas']) {
-      this.actualizarColumnasVisibles();
-    }
   }
 
-  //footer de las columnas
+  // --- LÓGICA DE TABLA ---
+
+  private vincularPaginacionYOrden(): void {
+    if (this.paginador) this.fuenteDatos.paginator = this.paginador;
+    if (this.ordenamiento) this.fuenteDatos.sort = this.ordenamiento;
+  }
+
   obtenerTotal(columnaClave: string): number {
     if (!this.fuenteDatos) return 0;
-    return this.fuenteDatos.filteredData.map((fila: any) => Number(fila[columnaClave]) || 0).reduce((acumulador, valor) => {
-      return acumulador + valor
-    }, 0);
-  }
-
-
-
-  get columnasFooter(): string[] {
-    return this.columnasVisibles.map(c => 'footer_' + c);
-  }
-
-
-  //filtro por columna
-  get columnasFiltro(): string[] {
-    return this.columnasVisibles.map(c => 'filtro_' + c);
-  }
-
-
-  aplicarFiltroColumna(clave: string, evento: Event): void {
-    const valor = (evento.target as HTMLInputElement).value;
-    this.filtrosPorColumna[clave] = valor.trim().toLowerCase();
-
-    this.actualizarFiltroTabla();
-  }
-  aplicarFiltroGlobal(evento: Event): void {
-
-    const valorFiltro = (evento.target as HTMLInputElement).value;
-    this.filtroGlobal = valorFiltro.trim().toLowerCase();
-    this.actualizarFiltroTabla();
-
-  }
-
-  private actualizarFiltroTabla(): void {
-
-    const filtroCombinado = {
-      global: this.filtroGlobal,
-      ...this.filtrosPorColumna
-    };
-
-    this.fuenteDatos.filter = JSON.stringify(filtroCombinado);
-  }
-
-  private inicializarTabla(): void {
-    this.fuenteDatos = new MatTableDataSource(this.datos);
-    this.actualizarColumnasVisibles();
-    this.columnasVisibles = this.columnas.filter(column => column.visible !== false).map(col => {
-      return col.clave as string;
-    });
-    this.configurarFiltroPersonalizado();
-
-  }
-  private configurarFiltroPersonalizado(): void {
-    this.fuenteDatos.filterPredicate = (fila: any, filtro: string): boolean => {
-
-      const filtros = filtro ? JSON.parse(filtro) : { global: '', filtrosColumna: {} };
-
-      const textoGlobal = (filtros.global || '').toLowerCase();
-
-      const coincideGlobal = !textoGlobal || this.columnas
-        .filter(col => col.visible !== false)
-        .some(col => {
-
-          const valor = fila[col.clave];
-          if (valor == null) return false;
-
-          return valor.toString().toLowerCase().includes(textoGlobal);
-        });
-
-      const coincideColumnas = this.columnas
-        .filter(col => col.visible !== false)
-        .every(col => {
-
-          const valor = fila[col.clave];
-          if (valor == null) return true;
-
-          const texto = valor.toString().toLowerCase();
-          const filtroColumna = filtros[col.clave];
-
-          if (!filtroColumna) return true;
-
-          return texto.includes(filtroColumna);
-        });
-
-      return coincideGlobal && coincideColumnas;
-    };
-  }
-
-  private actualizarColumnasVisibles(): void {
-    this.columnasVisibles = [...this.columnas
-      .filter(col => col.visible !== false)
-      .map(col => col.clave as string)];
+    return this.fuenteDatos.filteredData
+      .reduce((acc, fila: any) => acc + (Number(fila[columnaClave]) || 0), 0);
   }
 
   cambiarVisibilidadColumna(columna: TableColumn<T>): void {
@@ -168,8 +106,44 @@ export class SmartTableComponent<T> implements OnInit, OnChanges {
     if (!columna.visible) {
       delete this.filtrosPorColumna[columna.clave as string];
       this.actualizarFiltroTabla();
-
-      this.actualizarColumnasVisibles();
     }
+  }
+
+  // --- FILTRADO ---
+
+  aplicarFiltroColumna(clave: string, evento: Event): void {
+    const valor = (evento.target as HTMLInputElement).value;
+    this.filtrosPorColumna[clave] = valor.trim().toLowerCase();
+    this.actualizarFiltroTabla();
+  }
+
+  aplicarFiltroGlobal(evento: Event): void {
+    const valor = (evento.target as HTMLInputElement).value;
+    this.filtroGlobal = valor.trim().toLowerCase();
+    this.actualizarFiltroTabla();
+  }
+
+  private actualizarFiltroTabla(): void {
+    this.fuenteDatos.filter = JSON.stringify({
+      global: this.filtroGlobal,
+      ...this.filtrosPorColumna
+    });
+  }
+
+  private configurarFiltroPersonalizado(): void {
+    this.fuenteDatos.filterPredicate = (fila: any, filtro: string): boolean => {
+      const f = JSON.parse(filtro);
+
+      const coincideGlobal = !f.global || this.columnasActivas.some(col =>
+        fila[col.clave]?.toString().toLowerCase().includes(f.global)
+      );
+
+      const coincideColumnas = Object.keys(this.filtrosPorColumna).every(clave => {
+        const busqueda = f[clave];
+        return !busqueda || fila[clave]?.toString().toLowerCase().includes(busqueda);
+      });
+
+      return coincideGlobal && coincideColumnas;
+    };
   }
 }

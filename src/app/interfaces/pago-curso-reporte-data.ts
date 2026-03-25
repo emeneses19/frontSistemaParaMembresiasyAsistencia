@@ -1,5 +1,6 @@
 
 export interface ReportePagoCursoData {
+    idPpagocurso: string;
     serie: string;
     numerocorrelativo: string;
     fechapago: Date;

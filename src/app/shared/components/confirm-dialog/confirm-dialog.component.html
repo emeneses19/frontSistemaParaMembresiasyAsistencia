@@ -1,0 +1,25 @@
+<div class="card-confirm-dialog">
+    <h2 mat-dialog-title>{{ data.titulo }}</h2>
+
+    <mat-dialog-content>
+        <p style="margin-bottom: 20px;">{{ data.mensaje }}</p>
+
+        @if (data.requiereMotivo) {
+        <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>{{ data.placeholder }}</mat-label>
+            <input matInput [formControl]="motivoControl" rows="3" placeholder="Escriba aquí...">
+            @if (motivoControl.invalid && motivoControl.touched) {
+            <mat-error>El motivo es obligatorio para proceder.</mat-error>
+            }
+        </mat-form-field>
+        }
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-button (click)="cancelar()">Cancelar</button>
+        <button mat-raised-button [color]="data.colorConfirmar"
+            [disabled]="data.requiereMotivo && motivoControl.invalid" (click)="confirmar()">
+            {{ data.botonConfirmar }}
+        </button>
+    </mat-dialog-actions>
+</div>

@@ -1,20 +1,20 @@
 <div class="filtro">
     <div class="filtro__fechas">
-        <form action="" [formGroup]="filtroForm" (ngSubmit)="buscar()">
-            <mat-form-field class="filtro__campo">
+        <form action="" [formGroup]="filtroForm" (ngSubmit)="buscar()" class="filtro__form">
+            <mat-form-field class="filtro__campo" subscriptSizing="dynamic">
                 <mat-label>Fecha inicio</mat-label>
                 <input matInput [matDatepicker]="fechaInicio" formControlName="fechaInicio">
                 <mat-datepicker-toggle matIconSuffix [for]="fechaInicio"></mat-datepicker-toggle>
                 <mat-datepicker #fechaInicio></mat-datepicker>
             </mat-form-field>
 
-            <mat-form-field class="filtro__campo">
+            <mat-form-field class="filtro__campo" subscriptSizing="dynamic">
                 <mat-label>Fecha fin</mat-label>
                 <input matInput [matDatepicker]="fechaFin" formControlName="fechaFin">
                 <mat-datepicker-toggle matIconSuffix [for]="fechaFin"></mat-datepicker-toggle>
                 <mat-datepicker #fechaFin></mat-datepicker>
             </mat-form-field>
-            <button class="form__btn--search">
+            <button class="form__btn--search" [disabled]="filtroForm.invalid">
                 Buscar
             </button>
         </form>
@@ -22,7 +22,7 @@
 
     <div class="filtro__acciones">
         <button class="filtro__btn filtro__btn--excel">
-            Exportar Excel
+            <span>Exportar Excel</span>
         </button>
 
     </div>

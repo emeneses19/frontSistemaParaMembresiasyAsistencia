@@ -1,18 +1,30 @@
 .filtro {
     margin-top: var(--space-xxs);
     display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
     justify-content: space-between;
+    align-items: flex-start;
     padding: var(--space-md);
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.08);
+    align-items: center;
+
+    &__form {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: flex-start;
+
+    }
+
+    &__campo {
+        max-width: 180px;
+        margin-bottom: 0;
+    }
 }
 
-.filtro__fechas {
-    display: flex;
-    gap: var(--space-md);
-    align-items: center;
-    margin: 0;
-    padding: 0;
-}
+
 
 
 .form__btn--search {
@@ -27,6 +39,7 @@
     text-transform: uppercase;
     cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
 
     &:hover {
         background-color: var(--color-primary);
@@ -44,4 +57,26 @@
         cursor: not-allowed;
         box-shadow: none;
     }
+}
+
+.filtro__btn--excel {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #ffffff;
+    color: #408e4b;
+    box-shadow: 0 0 0 1px rgba(64, 142, 75, 0.5),
+        /* Borde muy fino gris claro */
+        0 1px 3px rgba(0, 0, 0, 0.05);
+    border-radius: 0.3rem;
+    cursor: pointer;
+
+}
+
+.filtro__btn--excel span {
+    font-weight: bold;
+    font-size: var(--font-size-sm);
+}
+
+.filtro__btn--excel:hover {
+    background-color: var(--color-secondary);
 }
