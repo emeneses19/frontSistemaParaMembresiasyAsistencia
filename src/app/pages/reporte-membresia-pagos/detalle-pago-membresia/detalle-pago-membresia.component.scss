@@ -1,0 +1,57 @@
+.detalle-pago-membresia {
+    margin: var(--space-sm);
+}
+
+.header-dialog {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+
+}
+
+.card-resumen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: var(--space-xs);
+    padding: var(--space-sm);
+}
+
+.card-estudiante {
+    margin-top: var(--space-xs);
+}
+
+.acciones-secundarias {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    button {
+        min-width: 120px;
+    }
+
+    .btn-whatsapp {
+        color: var(--color-primary);
+        border-color: var(--color-primary);
+    }
+}
+
+
+.text-error {
+    color: var(--color-error);
+
+
+}
+
+.text-success {
+    color: var(--color-accent);
+
+
+}
+
+.spacer {
+    flex: 1 1 auto;
+}

@@ -26,7 +26,6 @@ import { DatePipe, CurrencyPipe, NgClass } from '@angular/common';
     MatInputModule,
     DatePipe,
     CurrencyPipe,
-    NgClass
   ],
   templateUrl: './smart-table.component.html',
   styleUrl: './smart-table.component.scss'

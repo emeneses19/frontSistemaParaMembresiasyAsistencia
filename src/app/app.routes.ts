@@ -7,13 +7,14 @@ import { ConfiguracionComponent } from './pages/configuracion/configuracion.comp
 import { ListaGeneralEstudiantesComponent } from './pages/lista-general-estudiantes/lista-general-estudiantes.component';
 import { CuentaEstudianteComponent } from './pages/cuenta-estudiante/cuenta-estudiante.component';
 import { PagosComponent } from './pages/pagos/pagos.component';
+import { AsistenciaComponent } from './pages/asistencia/asistencia.component';
 
 export const routes: Routes = [
     { path: '', component: InicioComponent },
     { path: 'estudiantes', component: EstudiantesComponent },
     { path: 'cursos', component: CursosComponent },
     { path: 'pagos', component: PagosComponent },
-    { path: 'asistencias', component: EstudiantesComponent },
+    { path: 'asistencias', component: AsistenciaComponent },
     { path: 'auxiliar', component: AuxiliarComponent },
     { path: 'configuracion', component: ConfiguracionComponent },
     { path: 'estado-cuenta/:dni', component: CuentaEstudianteComponent },

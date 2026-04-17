@@ -1,0 +1,32 @@
+<div class="asistencias">
+    <div class="asistencias__content">
+        <mat-tab-group #tabs mat-stretch-tabs="false" mat-align-tabs="start">
+            <mat-tab label="Lista de sesiones">
+                <div class="asistencias__section content">
+                    <div class="asistencias__section-cards">
+                        <mat-card class="lista-card" appearance="outlined">
+                            @if (cargando==true) {
+                            <div class="loading-spinner">
+                                <div class="spinner"></div>
+                                <p class="loading-spinner__text">Cargando...</p>
+                            </div>
+                            }
+                            @else {
+                            <app-lista-sesiones (fechas)="manejarFiltroFechas($event)"
+                                [listaSesiones]="listaSesiones"></app-lista-sesiones>
+                            }
+                        </mat-card>
+                        <mat-card class="form-card" appearance="outlined">
+                            <app-sesion (sesion)="guardarSesion($event)"></app-sesion>
+                        </mat-card>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Reporte de asistencias por grupo">
+                <div class="lista-asistencias__section content">
+
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

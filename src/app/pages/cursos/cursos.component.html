@@ -1,9 +1,6 @@
-<div class="cursos"> 
+<div class="cursos">
     <div class="cursos__content">
-        <mat-tab-group #tabs
-        [selectedIndex]="tabActivoIndex"        
-        mat-stretch-tabs="false" 
-        mat-align-tabs="start">
+        <mat-tab-group #tabs [selectedIndex]="tabActivoIndex" mat-stretch-tabs="false" mat-align-tabs="start">
             <mat-tab label="Lista de cursos">
                 <div class="cursos__section content">
                     <div class="cursos__section-cards">
@@ -15,22 +12,14 @@
                             </div>
                             }
                             @else {
-                                <app-lista-cursos  
-                                (datosDelCurso)="verListDeInscritos($event)"                               
-                                [listaDeCursos]="cursos"
+                            <app-lista-cursos (datosDelCurso)="verListDeInscritos($event)" [listaDeCursos]="cursos"
                                 (cursoAEliminar)="eliminarCurso($event)"
-                                (cursoEditar)="cursoAEditar($event)"
-
-                                ></app-lista-cursos>
+                                (cursoEditar)="cursoAEditar($event)"></app-lista-cursos>
                             }
                         </mat-card>
                         <mat-card class="curso-card" appearance="outlined">
-                            <app-agregar-curso
-                                [listaperiodos]="periodos"  
-                                (cursoGuardado)="guardarCurso($event)"
-                                [cursoParaEditar]="curso"
-                                (cursoEditado)="actualizarCurso($event)"
-                                                       >
+                            <app-agregar-curso [listaperiodos]="periodos" (cursoGuardado)="guardarCurso($event)"
+                                [cursoParaEditar]="curso" (cursoEditado)="actualizarCurso($event)">
                             </app-agregar-curso>
                         </mat-card>
                     </div>
@@ -38,12 +27,10 @@
             </mat-tab>
             <mat-tab label="Lista de inscritos en el curso">
                 <div class="inscripciones__section content">
-                    <app-lista-inscripcion
-                    [curso]="cursoParaVerListaDeInscritos"
-                    ></app-lista-inscripcion>
+                    <app-lista-inscripcion [curso]="cursoParaVerListaDeInscritos"></app-lista-inscripcion>
                 </div>
             </mat-tab>
-            <mat-tab label="Pagos de cursos">Pagos de cursos</mat-tab>
+            <!-- <mat-tab label="Pagos de cursos">Pagos de cursos</mat-tab> -->
         </mat-tab-group>
     </div>
 </div>

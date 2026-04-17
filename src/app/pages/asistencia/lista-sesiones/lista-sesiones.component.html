@@ -1,0 +1,55 @@
+<div class="reporte-sesion">
+    <div class="cabecera">
+        <form action="" [formGroup]="filtroForm" (ngSubmit)="buscar()" class="filtro__form">
+            <mat-form-field class="filtro__campo" subscriptSizing="dynamic">
+                <mat-label>Fecha inicio</mat-label>
+                <input matInput [matDatepicker]="fechaInicio" formControlName="fechaInicio">
+                <mat-datepicker-toggle matIconSuffix [for]="fechaInicio"></mat-datepicker-toggle>
+                <mat-datepicker #fechaInicio></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="filtro__campo" subscriptSizing="dynamic">
+                <mat-label>Fecha fin</mat-label>
+                <input matInput [matDatepicker]="fechaFin" formControlName="fechaFin"
+                    [min]="filtroForm.get('fechaInicio')?.value">
+                <mat-datepicker-toggle matIconSuffix [for]="fechaFin"></mat-datepicker-toggle>
+                <mat-datepicker #fechaFin></mat-datepicker>
+            </mat-form-field>
+            <button mat-stroked-button color="primary" [disabled]="filtroForm.invalid" (click)="buscar()">
+                Buscar
+            </button>
+        </form>
+
+    </div>
+    <div class="sesion_lista">
+        @for (sesion of listaSesionesPaginada; track $index) {
+        <mat-card-content class="sesion__lista-datos">
+            <mat-card-subtitle>{{sesion.codigoSesion}} - {{sesion.sesionNombre}}
+            </mat-card-subtitle>
+            <div class="sesion-detalle">
+                <span class="curso-precio">Estado:{{sesion.habilitado? 'Activo':'No Activo'}}</span>
+                <span>Fecha: {{sesion.fechasesion | date:'dd/MM/yyyy'}}</span>
+            </div>
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Acciones">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button [disabled]="!sesion.habilitado" mat-menu-item (click)="VerListaDeEstudiantes(sesion)">
+                    <mat-icon>group</mat-icon>
+                    <span>Llamar lista</span>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="eliminarsesion(sesion.codigoSesion)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Deshabilitar</span>
+                </button>
+            </mat-menu>
+        </mat-card-content>
+
+        }
+
+        <mat-paginator [length]="totalSesiones" [pageSize]="tamanioPagina" [pageIndex]="indexPagina"
+            (page)="manejarCambiosDePagina($event)" aria-label="Seleccionar pagina de sesion">
+
+        </mat-paginator>
+    </div>
+</div>

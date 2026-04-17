@@ -1,0 +1,61 @@
+<div class="sesion-card">
+    <mat-card-header>
+        <mat-card-title>Registro de sesion</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <form [formGroup]="sesionForm" (ngSubmit)="guardarSesion()" class="sesion_add-form">
+        <mat-form-field class="sesion_add-field" appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input formControlName="nombre" matInput placeholder="Nombre">
+            <button type="button" matSuffix mat-icon-button aria-label="nombre" (click)="sugerirNombre()">
+                <mat-icon>create</mat-icon>
+            </button>
+            @if (sesionForm.get('nombre')?.hasError('required')) {
+            <mat-error>Campo obligatorio</mat-error>
+            }
+
+        </mat-form-field>
+        <mat-form-field class="sesion_add-field" appearance="outline">
+            <mat-label>Descripción</mat-label>
+            <input formControlName="descripcion" matInput placeholder="Descripcion">
+            @if (sesionForm.get('descripcion')?.hasError('required')) {
+            <mat-error>Campo obligatorio</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field class="sesion_add-field">
+            <mat-label>Fecha</mat-label>
+            <input formControlName="fechasesion" matInput [matDatepicker]="fecha">
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="fecha"></mat-datepicker-toggle>
+            <mat-datepicker #fecha></mat-datepicker>
+            @if (sesionForm.get('fechasesion')?.hasError('required')) {
+            <mat-error>Campo obligatorio</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field class="sesion_add-field" appearance="outline">
+            <mat-label>Grupo</mat-label>
+            <mat-select formControlName="idgruposmiembro">
+                @for (grupo of listaGrupos; track $index) {
+                <mat-option [value]="grupo.idgruposmiembro">{{grupo.idgruposmiembro}} -
+                    {{grupo.nombredelgrupo}}</mat-option>
+                }
+            </mat-select>
+            @if (sesionForm.get('idgruposmiembro')?.value) {
+            <button matSuffix mat-icon-button aria-label="Clear" (click)="limpiarGrupo()">
+                <mat-icon>close</mat-icon>
+            </button>
+            }
+            @if (sesionForm.get('idgruposmiembro')?.hasError('required')) {
+            <mat-error>Campo obligatorio</mat-error>
+            }
+        </mat-form-field>
+        <div class="sesion_add-field">
+            <mat-label>Esta habilitado </mat-label>
+            <mat-slide-toggle formControlName="habilitado"></mat-slide-toggle>
+        </div>
+        <br>
+        <br>
+        <button [disabled]="sesionForm.invalid" class="form__btn--save">Guardar</button>
+    </form>
+    <br>
+</div>

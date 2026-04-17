@@ -1,1 +1,12 @@
-<p>reporte-membresia-pagos works!</p>
+<div class="container-reporte">
+    <div class="cabera__reporte">
+        <app-cabecera-reporte-pagos (filtro)="manejarFiltroFechas($event)">
+        </app-cabecera-reporte-pagos>
+
+    </div>
+    <div class="table__reporte">
+        <app-smart-table [datos]="dataReporte" [columnas]="columnas" [mostrarBusquedaGlobal]="true"
+            [mostrarPaginacion]="true" (accionEmitida)="manejarEventoTabla($event)" claveColumnaEstado="estado"
+            valorEstado="Anulado"></app-smart-table>
+    </div>
+</div>
