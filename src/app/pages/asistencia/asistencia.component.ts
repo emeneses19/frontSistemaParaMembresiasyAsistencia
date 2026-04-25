@@ -8,6 +8,7 @@ import { SesionService } from '../../services/sesion.service';
 import { SesionModel } from '../../models/Sesion';
 import { SesionData } from '../../interfaces/sesion-report';
 import { SuccesDialogService } from '../../services/succes-dialog.service';
+import { ListaAsistenciasComponent } from './lista-asistencias/lista-asistencias.component';
 
 
 @Component({
@@ -18,7 +19,8 @@ import { SuccesDialogService } from '../../services/succes-dialog.service';
     MatCardModule,
     MatTabsModule,
     ListaSesionesComponent,
-    SesionComponent
+    SesionComponent,
+    ListaAsistenciasComponent
 
   ],
   templateUrl: './asistencia.component.html',
@@ -40,6 +42,18 @@ export class AsistenciaComponent implements OnInit {
     this.fechaInicio = hoy;
     this.obtnerSesiones(this.fechaInicio, this.fechaFin);
 
+  }
+
+  darDeBajaSesion(codigo: string) {
+    this._sesionService.darDeBajaSesion(codigo).subscribe({
+      next: (res) => {
+        this._succesDialogService.openSuccessDialog('CORRECTO', 'Sesion dajo de baja');
+        this.obtnerSesiones(this.fechaInicio, this.fechaFin);
+      },
+      error: (err) => {
+        console.log("Ocurrio un error al deshabilitar sesion ", err);
+      }
+    })
   }
 
   manejarFiltroFechas(formValue: any) {

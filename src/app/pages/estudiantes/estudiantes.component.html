@@ -20,7 +20,7 @@
             <mat-button-toggle (click)="aplicarfiltro('no-miembros')">ver solo no miembros</mat-button-toggle>
         </mat-button-toggle-group>
         <div>
-             <button class="estudents__filters-refresh"  (click)="obtenerListaEstudiantes()" >
+            <button class="estudents__filters-refresh" (click)="obtenerListaEstudiantes()">
                 <mat-icon>refresh</mat-icon>
             </button>
             <mat-form-field>
@@ -32,13 +32,7 @@
     </div>
     <div class="students__table">
         <div class="mat-elevation-z8">
-            @if (cargando==true) {
-            <div class="loading-spinner">
-                <div class="spinner"></div>
-                <p class="loading-spinner__text">Cargando...</p>
-            </div>
-            }
-            @else {
+
             <table mat-table [dataSource]="dataEstudiante" matSort>
                 <ng-container matColumnDef="nro">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Nro </th>
@@ -96,17 +90,17 @@
                     <td mat-cell *matCellDef="let estudiante"> {{estudiante.fechaasignacionmiembro | date:'dd/MM/yyyy'}}
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="grupo">
+                <ng-container matColumnDef="grupomiembro">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Grupo</th>
-                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.grupo}} </td>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.GrupoDeMiembro?.nombredelgrupo}} </td>
                 </ng-container>
                 <ng-container matColumnDef="area">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Area</th>
-                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.area}} </td>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.Area?.nombrearea}} </td>
                 </ng-container>
                 <ng-container matColumnDef="cargo">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Cargo</th>
-                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.cargo}} </td>
+                    <td mat-cell *matCellDef="let estudiante"> {{estudiante.Cargo?.nombrecargo}} </td>
                 </ng-container>
                 <ng-container matColumnDef="fechaultmodificacion">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Ult. Modificacion</th>
@@ -153,7 +147,14 @@
                 </tr>
 
             </table>
+
+            @if (cargando==true) {
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <p class="loading-spinner__text">Cargando...</p>
+            </div>
             }
+
         </div>
     </div>
     <mat-paginator [pageSizeOptions]="[ 5, 10, 50]" aria-label="Select page of users"></mat-paginator>

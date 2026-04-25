@@ -14,6 +14,7 @@ import { SesionData } from '../../../interfaces/sesion-report';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { LlamarListaComponent } from '../llamar-lista/llamar-lista.component';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-lista-sesiones',
@@ -37,11 +38,14 @@ export class ListaSesionesComponent implements OnInit, OnChanges {
   private fb = inject(FormBuilder);
   @Input() listaSesiones: SesionData[] = [];
   @Output() fechas = new EventEmitter<any>();
+  @Output() codigoSesion = new EventEmitter<string>();
   listaSesionesPaginada: SesionData[] = [];
   tamanioPagina = 6;
   indexPagina = 0;
   totalSesiones = 0;
   readonly dialogLista = inject(MatDialog);
+  readonly dialogConfirm = inject(MatDialog);
+
   ngOnInit(): void {
     this.aplicarPaginacion();
     this.filtroForm = this.fb.group({
@@ -78,9 +82,34 @@ export class ListaSesionesComponent implements OnInit, OnChanges {
 
   }
 
-  eliminarsesion(codigoSesion: string) {
+  eliminarsesion(sesion: SesionData) {
+    const dialogConfirm = this.dialogConfirm.open(ConfirmDialogComponent, {
+      width: '300px',
+      data: {
+        titulo: 'Confirmar',
+        mensaje: `¿Estás seguro de deshabilitar sesión: ${sesion.sesionNombre} ?`,
+        botonConfirmar: 'Aceptar',
+        colorConfirmar: 'warn',
+        requiereMotivo: false
+      }
+
+    })
+    dialogConfirm.afterClosed().subscribe(result => {
+      if (result && result.confirmado) {
+
+        this.deshabilitarSesion(sesion.codigoSesion);
+      }
+    })
+
 
   }
+
+  deshabilitarSesion(codigoSesion: string) {
+    this.codigoSesion.emit(codigoSesion);
+
+  }
+
+
   buscar() {
     if (this.filtroForm.invalid) {
       return console.log('Fechas no validas para buscar');

@@ -1,0 +1,31 @@
+.cabecera {
+    margin: var(--space-sm);
+    padding: var(--space-xs);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+}
+
+.filtro__form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.filtro__campo {
+    width: 160px;
+
+
+}
+
+.select {
+    margin-top: 20px;
+}
+
+
+button[mat-stroked-button] {
+    height: 36px;
+    line-height: 36px;
+    padding: 0 16px;
+}

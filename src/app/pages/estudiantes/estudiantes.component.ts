@@ -42,12 +42,18 @@ export class EstudiantesComponent implements OnInit {
   }
 
 
-  displayedColumns: string[] = ['nro', 'dni', 'nombres', 'apellidos', 'celular', 'correo', 'fechanac', 'direccion', 'estado', 'fecharegistro', 'esmiembro', 'fechaasignacionmiembro', 'grupo', 'area', 'cargo', 'fechaultmodificacion', 'tiempodemiembro', 'detalle1', 'detalle2', 'acciones'];
+  displayedColumns: string[] = ['nro', 'dni', 'nombres', 'apellidos', 'celular', 'correo', 'fechanac', 'direccion', 'estado', 'fecharegistro', 'esmiembro', 'fechaasignacionmiembro', 'grupomiembro', 'area', 'cargo', 'fechaultmodificacion', 'tiempodemiembro', 'detalle1', 'detalle2', 'acciones'];
   dataEstudiante: MatTableDataSource<EstudianteModel> = new MatTableDataSource<EstudianteModel>([]);
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+
+  //para las propiedades opcionales o no vienen en la misma clase
+
+
+
 
 
   ngOnInit(): void {
@@ -80,23 +86,49 @@ export class EstudiantesComponent implements OnInit {
 
   }
 
-  abrirFormEstudiante(estudianteParaEditar?:EstudianteModel) {
-    const dialogRef = this.dialog.open(AgregarestudianteComponent,{
-       data: { estudiante: estudianteParaEditar || null } 
+  abrirFormEstudiante(estudianteParaEditar?: EstudianteModel) {
+    const dialogRef = this.dialog.open(AgregarestudianteComponent, {
+      data: { estudiante: estudianteParaEditar || null }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result && result.estudianteActualizado){
+      if (result && result.estudianteActualizado) {
         this.actualizarTablaVisualmente(result.estudianteActualizado);
       }
 
     });
 
   }
-  
+
 
   ngAfterViewInit() {
     this.dataEstudiante.paginator = this.paginator;
     this.dataEstudiante.sort = this.sort;
+    this.dataEstudiante.sortingDataAccessor = (item, propiedad) => {
+      switch (propiedad) {
+        case 'grupomiembro':
+          return item.GrupoDeMiembro?.nombredelgrupo || '';
+        case 'area':
+          return item.Area?.nombrearea || '';
+        case 'cargo':
+          return item.Cargo?.nombrecargo || '';
+        default:
+          return (item as any)[propiedad];
+      }
+    };
+    this.dataEstudiante.filterPredicate = (data, filter: string) => {
+      const texto = `
+      ${data.dni}
+      ${data.nombres}
+      ${data.apellidos}
+      ${data.celular}
+      ${data.correo}
+      ${data.GrupoDeMiembro?.nombredelgrupo || ''}
+      ${data.Area?.nombrearea || ''}
+      ${data.Cargo?.nombrecargo || ''}
+    `.toLowerCase();
+
+      return texto.includes(filter);
+    };
   }
 
   applyFilter(event: Event) {
@@ -121,32 +153,32 @@ export class EstudiantesComponent implements OnInit {
     }
 
     // Aplica la copia del array para notificar a MatTableDataSource
-    this.dataEstudiante.data = [...estudiantesActuales]; 
+    this.dataEstudiante.data = [...estudiantesActuales];
     // Mover el paginador a la primera página si es un nuevo registro (falta igual)
     if (index === -1 && this.dataEstudiante.paginator) {
-        this.dataEstudiante.paginator.firstPage();
+      this.dataEstudiante.paginator.firstPage();
     }
   }
 
   crearEstudiante(estudiante: EstudianteModel) {
     this._estudianteService.crearEstududiante(estudiante).subscribe({
-      next:()=>{
+      next: () => {
         this.obtenerListaEstudiantes();
       },
-      error: (error)=>{
-         console.error('Error al agregar:', error);
+      error: (error) => {
+        console.error('Error al agregar:', error);
       }
     })
   }
   openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action,{
-      duration:this.durationInSeconds * 1000,
+    this._snackBar.open(message, action, {
+      duration: this.durationInSeconds * 1000,
     })
   }
 
-  eliminarEstudiante(dni:string){
+  eliminarEstudiante(dni: string) {
     this._estudianteService.eliminarEstudiante(dni).subscribe({
-      next:()=>{
+      next: () => {
         this.obtenerListaEstudiantes();
         this.openSnackBar('Estudiante eliminado correctamente', 'Aceptar');
 

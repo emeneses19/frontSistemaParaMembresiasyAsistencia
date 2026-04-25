@@ -38,7 +38,7 @@
                     <span>Llamar lista</span>
                 </button>
                 <mat-divider></mat-divider>
-                <button mat-menu-item (click)="eliminarsesion(sesion.codigoSesion)">
+                <button [disabled]="!sesion.habilitado" mat-menu-item (click)="eliminarsesion(sesion)">
                     <mat-icon>delete</mat-icon>
                     <span>Deshabilitar</span>
                 </button>

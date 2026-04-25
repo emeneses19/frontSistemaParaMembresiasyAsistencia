@@ -12,8 +12,8 @@
                             </div>
                             }
                             @else {
-                            <app-lista-sesiones (fechas)="manejarFiltroFechas($event)"
-                                [listaSesiones]="listaSesiones"></app-lista-sesiones>
+                            <app-lista-sesiones (fechas)="manejarFiltroFechas($event)" [listaSesiones]="listaSesiones"
+                                (codigoSesion)="darDeBajaSesion($event)"></app-lista-sesiones>
                             }
                         </mat-card>
                         <mat-card class="form-card" appearance="outlined">
@@ -24,6 +24,7 @@
             </mat-tab>
             <mat-tab label="Reporte de asistencias por grupo">
                 <div class="lista-asistencias__section content">
+                    <app-lista-asistencias></app-lista-asistencias>
 
                 </div>
             </mat-tab>

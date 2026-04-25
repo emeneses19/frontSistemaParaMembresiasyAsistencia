@@ -1,23 +1,30 @@
+import { AreaModel } from "./Area";
+import { CargoModel } from "./Cargo";
+import { GrupoMiembroModel } from "./GrupoMiembro";
+
 export class EstudianteModel {
-    dni:string;
-    nombres:string;
-    apellidos:string;
-    fechadenacimiento:Date;
-    celular:string;
-    correo:string;
-    direccion:string;
-    estado:string;
-    fecharegistro?:Date;
-    esmiembro:boolean;
-    fechaasignacionmiembro?:Date | null;;
-    fechadeultimaactualizacion?:Date | null;
-    idgruposmiembro?:number | null;
-    idarea?:number | null;
+    dni: string;
+    nombres: string;
+    apellidos: string;
+    fechadenacimiento: Date;
+    celular: string;
+    correo: string;
+    direccion: string;
+    estado: string;
+    fecharegistro?: Date;
+    esmiembro: boolean;
+    fechaasignacionmiembro?: Date | null;;
+    fechadeultimaactualizacion?: Date | null;
+    idgruposmiembro?: number | null;
+    idarea?: number | null;
     idcargo?: number | null;
     detalle1?: string | null;
     detalle2?: string | null;
+    GrupoDeMiembro?: GrupoMiembroModel;
+    Area?: AreaModel;
+    Cargo?: CargoModel;
 
-    constructor(){
+    constructor() {
         this.dni = '';
         this.nombres = '';
         this.apellidos = '';

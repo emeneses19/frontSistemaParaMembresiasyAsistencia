@@ -14,9 +14,13 @@ export class SesionService {
   constructor(private _http: HttpClient) {
   }
 
+  darDeBajaSesion(idSesion: string): Observable<any> {
+    return this._http.patch(`${this.URL}/darbaja/${idSesion}`, { habilitado: false });
+
+  }
+
   obtnerListaParaPasarAsistencia(idSesion: string): Observable<AsistenciaData[]> {
     return this._http.get<AsistenciaData[]>(`${this.URL}/lista/${idSesion}`);
-
 
   }
 

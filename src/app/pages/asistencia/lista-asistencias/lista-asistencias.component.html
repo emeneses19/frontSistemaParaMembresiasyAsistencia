@@ -14,17 +14,41 @@
                 <mat-datepicker-toggle matIconSuffix [for]="fechaFin"></mat-datepicker-toggle>
                 <mat-datepicker #fechaFin></mat-datepicker>
             </mat-form-field>
-            <mat-form-field class="filtro__campo">
-                <mat-label>Select</mat-label>
-                <mat-select>
-                    <mat-option value="one">First option</mat-option>
-                    <mat-option value="two">Second option</mat-option>
+            <mat-form-field class="select">
+                <mat-label>Grupo</mat-label>
+                <mat-select formControlName="idgruposmiembro">
+                    @if (cargandoGrupo) {
+                    <mat-option disabled>Cargando...</mat-option>
+                    }
+                    @for (grupo of grupos; track $index) {
+                    <mat-option [value]="grupo.idgruposmiembro">{{grupo.idgruposmiembro}} -
+                        {{grupo.nombredelgrupo}}</mat-option>
+
+                    }
                 </mat-select>
+                @if (filtroForm.get('idgruposmiembro')?.value) {
+                <button type="button" matSuffix mat-icon-button aria-label="Clear" (click)="limpiarGrupo()">
+                    <mat-icon>close</mat-icon>
+                </button>
+                }
             </mat-form-field>
-            <button mat-stroked-button color="primary" [disabled]="filtroForm.invalid" (click)="buscar()">
+            <button mat-stroked-button color="primary" [disabled]="filtroForm.invalid || cargandoReporte"
+                (click)="buscar()">
                 Buscar
             </button>
+
+
         </form>
+        <div class="section-reporte">
+            @if (cargandoReporte) {
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <p class="loading-spinner__text">Cargando...</p>
+            </div>
+            }
+            <app-smart-table [datos]="asistencias" [columnas]="columnas" [mostrarBusquedaGlobal]="false"
+                [mostrarPaginacion]="true"></app-smart-table>
+        </div>
 
     </div>
 </div>
