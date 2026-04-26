@@ -11,6 +11,7 @@ import { EstudianteModel } from '../../models/Estudiantes';
 import { EstudianteService } from '../../services/estudiante.service';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ExcelService } from '../../services/excel.service';
 
 
 @Component({
@@ -38,7 +39,13 @@ export class EstudiantesComponent implements OnInit {
   estudiantes: EstudianteModel[] = [];
   durationInSeconds = 5;
   private _snackBar = inject(MatSnackBar);
-  constructor(private _estudianteService: EstudianteService) {
+  
+
+
+  constructor(
+    private _estudianteService: EstudianteService,
+    private _excelService: ExcelService
+  ) {
   }
 
 
@@ -48,11 +55,6 @@ export class EstudiantesComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
-
-  //para las propiedades opcionales o no vienen en la misma clase
-
-
 
 
 
@@ -83,6 +85,20 @@ export class EstudiantesComponent implements OnInit {
 
 
   exportarExcel() {
+    const listaFormateados = this.dataEstudiante.data.map(item =>{
+      return{
+      ...item,
+      fechadenacimiento: this.formatearFechasParaExportar(item.fechadenacimiento),
+      fechaasignacionmiembro: this.formatearFechasParaExportar(item.fechaasignacionmiembro??null),
+      esmiembro: item.esmiembro? 'SI': 'NO',
+      fecharegistro:this.formatearFechasParaExportar(item.fecharegistro??null),
+      fechadeultimaactualizacion: this.formatearFechasParaExportar(item.fechadeultimaactualizacion??null),
+
+
+      
+    }
+    })
+    this._excelService.exportToExcel(listaFormateados,`ListaEstudiantes${this.nombreAuxiliar(new Date())}`);
 
   }
 
@@ -226,6 +242,23 @@ export class EstudiantesComponent implements OnInit {
 
     return resultado || 'Menos de un mes';
   }
+
+  nombreAuxiliar(param: Date): string{
+    let anio = param.getFullYear();
+    let mes = (param.getMonth() + 1).toString().padStart(2, '0');
+    let dia = param.getDate().toString().padStart(2, '0');
+    let segundos = param.getSeconds().toString().padStart(2,'0');
+    return `${anio}${mes}${dia}${segundos}`;
+
+  }
+
+  private formatearFechasParaExportar(fechaStr: string | Date | null): string {
+  if (!fechaStr || fechaStr === '-') return '';
+  const fecha = new Date(fechaStr);
+  
+  // Retorna formato local: 26/04/2026 (según el país del usuario)
+  return new Intl.DateTimeFormat('es-PE').format(fecha); 
+}
 
 
 }
