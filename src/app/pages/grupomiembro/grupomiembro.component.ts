@@ -63,7 +63,7 @@ export class GrupomiembroComponent implements OnInit {
     })
   }
 
-  eliminarGrupoMiembro(id: number) {
+  eliminarGrupoMiembro(id: string) {
     this._grupoMiembroService.eliminarGrupoMiembro(id).subscribe({
       next: () => {
         this.obtenerGrupoMiembros();

@@ -21,6 +21,6 @@ export class AreaService {
   }
 
   eliminarArea(id: number):Observable<any>{
-    return this._http.delete(`${this.URL}/eliminar/${id}`);
+    return this._http.delete<any>(`${this.URL}/eliminar/${id}`);
   }
 }

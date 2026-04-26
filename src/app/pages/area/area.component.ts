@@ -67,10 +67,16 @@ export class AreaComponent  implements OnInit{
   }
 
   eliminarArea(id:number){
+    console.log('el codigo de are', id);
     this._areaService.eliminarArea(id).subscribe({
       next:()=>{
-        this.obtenerAreas();
+        console.log("Algooooo?")
         this.openSnackBar('Area eliminado', 'Aceptar');
+        this.obtenerAreas();
+      },
+      error:(err)=>{
+        console.log(err);
+        this.openSnackBar('Error al eliminar área', 'Cerrar');
       }
     })
 

@@ -25,6 +25,7 @@ export class AddCargoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.cargoForm = this.fb.group({
       nombrecargo: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(45)]],
+      descripcion: ['' ],
 
     })
     this.setupValueChangesEmitter();

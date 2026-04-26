@@ -16,7 +16,7 @@ export class GrupomiembroService {
   agregarGrupoMiembro(grupo:GrupoMiembroModel):Observable<GrupoMiembroModel>{
     return this._http.post<GrupoMiembroModel>(`${this.URL}/crear`,grupo);
   }
-  eliminarGrupoMiembro(id:number):Observable<any>{
+  eliminarGrupoMiembro(id:string):Observable<any>{
     return this._http.delete(`${this.URL}/eliminar/${id}`);
   }
 }
