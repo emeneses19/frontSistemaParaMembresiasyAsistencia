@@ -7,6 +7,9 @@
     <div class="table__reporte">
         <app-smart-table [datos]="dataReporte" [columnas]="columnas" [mostrarBusquedaGlobal]="true"
             [mostrarPaginacion]="true" (accionEmitida)="manejarEventoTabla($event)" claveColumnaEstado="estado"
-            valorEstado="Anulado"></app-smart-table>
+            valorEstado="Anulado"
+            [mostrarbtnExcel]="true"
+            [nombreReporte]="'ReporteMembresias'"
+            ></app-smart-table>
     </div>
 </div>

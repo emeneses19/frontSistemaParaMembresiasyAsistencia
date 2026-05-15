@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { TableColumn } from '../../../interfaces/table-column.data';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTableModule } from '@angular/material/table';
@@ -10,6 +10,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { DatePipe, CurrencyPipe, NgClass } from '@angular/common';
+import { ExcelService } from '../../../services/excel.service';
 
 
 @Component({
@@ -40,12 +41,40 @@ export class SmartTableComponent<T> implements OnInit, OnChanges {
   columnasVisibles: string[] = [];
   @Input() mostrarBusquedaGlobal: boolean = true;
   @Input() mostrarPaginacion: boolean = true;
+  @Input() mostrarbtnExcel: boolean = true;
+  @Input() nombreReporte: string = '';
 
   //para resaltar las columnas segun estado
   @Input() claveColumnaEstado: string = '';
   @Input() valorEstado: string = '';
   @Input() colorResaltado: string = '#ffebee';
   @Input() colorTextoResaltado: string = '';
+
+
+  private _excelService = inject(ExcelService);
+
+
+  //para  exportar excel 
+exportarExcel(): void {
+
+  const columnasExportar = this.columnas
+    .filter(col =>
+      col.visible !== false &&
+      col.clave !== 'acciones'
+    )
+    .map(col => ({
+      key: col.clave as string,
+      header: col.etiqueta,
+      formatoExportar: col.formatoExportar
+    }));
+
+  this._excelService.exportToExcel(
+    this.fuenteDatos.filteredData,
+    `${this.nombreReporte}${this.nombreAuxiliar(new Date())}`,
+    columnasExportar
+  );
+
+}
 
 
   //para filtro por columna
@@ -144,5 +173,14 @@ export class SmartTableComponent<T> implements OnInit, OnChanges {
 
       return coincideGlobal && coincideColumnas;
     };
+  }
+
+  //para ayudar dando nombres diferentes al exportar excel
+  nombreAuxiliar(fecha: Date): string{
+    const anio = fecha.getFullYear().toString();
+    const mes = (fecha.getMonth()+1).toString().padStart(2,'0');
+    const dia = fecha.getDate().toString().padStart(2,'0');
+    const segundo = fecha.getSeconds().toString().padStart(2,'0');
+    return `${anio}${mes}${dia}${segundo}`;
   }
 }

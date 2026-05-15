@@ -6,4 +6,5 @@ export interface TableColumn<T = any> {
     filtrable?: boolean;
     visible?: boolean;
     sumable?: boolean;
+    formatoExportar?: (valor: any, fila?: T) => any;
 }

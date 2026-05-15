@@ -1,14 +1,17 @@
 <div class="contenedor-tabla">
     <div class="tabla-toolbar">
-        @if (mostrarBusquedaGlobal) {
+       
         <div class="contenedor-filtro">
+             @if (mostrarBusquedaGlobal) {
             <mat-form-field appearance="outline" subscriptSizing="dynamic">
                 <mat-label>Buscar</mat-label>
                 <input matInput (keyup)="aplicarFiltroGlobal($event)" placeholder="Escribe para filtrar..." />
             </mat-form-field>
-
+             }
+            <button [disabled]="fuenteDatos.filteredData.length <= 0" (click)="exportarExcel()" >Exportar Excel</button>
         </div>
-        }
+       
+        
         <button mat-icon-button [matMenuTriggerFor]="menuColumnas" class="boton-columnas">
             <mat-icon>view_column</mat-icon>
         </button>
