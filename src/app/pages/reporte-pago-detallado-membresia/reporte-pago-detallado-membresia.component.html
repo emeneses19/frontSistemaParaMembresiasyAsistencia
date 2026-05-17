@@ -1,0 +1,19 @@
+<div class="reporte-detallado">
+    <div class="cabercera-reporte">
+        <app-cabecera-reporte-pagos 
+    (filtro)="manejarFiltroFechas($event)">        
+    </app-cabecera-reporte-pagos>
+    </div>
+    <div class="tabla">
+        <app-smart-table 
+        [datos]="dataReporte"
+        [columnas]="columnas"
+        [mostrarBusquedaGlobal]="true"
+        [mostrarPaginacion]="true"
+        [mostrarbtnExcel]="true"
+        [nombreReporte]="'ReporteDetallePagos'">
+
+        </app-smart-table>
+    </div>
+</div>
+

@@ -4,6 +4,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ListaGeneralEstudiantesComponent } from '../lista-general-estudiantes/lista-general-estudiantes.component';
 import { ReporteCursoPagosComponent } from '../reporte-curso-pagos/reporte-curso-pagos.component';
 import { ReporteMembresiaPagosComponent } from '../reporte-membresia-pagos/reporte-membresia-pagos.component';
+import { ReportePagoDetalladoMembresiaComponent } from '../reporte-pago-detallado-membresia/reporte-pago-detallado-membresia.component';
 
 
 @Component({
@@ -14,7 +15,8 @@ import { ReporteMembresiaPagosComponent } from '../reporte-membresia-pagos/repor
     MatTabsModule,
     ListaGeneralEstudiantesComponent,
     ReporteCursoPagosComponent,
-    ReporteMembresiaPagosComponent
+    ReporteMembresiaPagosComponent,
+    ReportePagoDetalladoMembresiaComponent,
   ],
   templateUrl: './pagos.component.html',
   styleUrl: './pagos.component.scss'

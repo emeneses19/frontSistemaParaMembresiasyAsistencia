@@ -1,20 +1,22 @@
 <div class="contenedor-tabla">
     <div class="tabla-toolbar">
-       
-        <div class="contenedor-filtro">
-             @if (mostrarBusquedaGlobal) {
+        <div class="toolbar-izquierdaa">
+            @if (mostrarBusquedaGlobal) {
             <mat-form-field appearance="outline" subscriptSizing="dynamic">
                 <mat-label>Buscar</mat-label>
                 <input matInput (keyup)="aplicarFiltroGlobal($event)" placeholder="Escribe para filtrar..." />
             </mat-form-field>
-             }
-            <button [disabled]="fuenteDatos.filteredData.length <= 0" (click)="exportarExcel()" >Exportar Excel</button>
+            }
         </div>
-       
-        
-        <button mat-icon-button [matMenuTriggerFor]="menuColumnas" class="boton-columnas">
-            <mat-icon>view_column</mat-icon>
-        </button>
+        <div class="toolbar-derecha">
+            <button class="filtro__btn filtro__btn--excel" [disabled]="fuenteDatos.filteredData.length <= 0"
+                (click)="exportarExcel()">
+                <span>Exportar Excel</span>
+            </button>
+            <button mat-icon-button [matMenuTriggerFor]="menuColumnas" class="boton-columnas">
+                <mat-icon>view_column</mat-icon>
+            </button>
+        </div>
 
     </div>
     <mat-menu #menuColumnas="matMenu">
@@ -72,7 +74,7 @@
                 <th mat-header-cell *matHeaderCellDef>
 
                     @if (col.filtrable) {
-                    <mat-form-field style="width: 100%;">
+                    <mat-form-field class="filtro-columna"  style="width: 100%;">
                         <input matInput (input)="aplicarFiltroColumna(col.clave.toString(), $event)">
                     </mat-form-field>
                     }

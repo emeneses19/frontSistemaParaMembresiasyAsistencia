@@ -59,24 +59,3 @@
     }
 }
 
-.filtro__btn--excel {
-    padding: 0.5rem 1rem;
-    border: none;
-    background-color: #ffffff;
-    color: #408e4b;
-    box-shadow: 0 0 0 1px rgba(64, 142, 75, 0.5),
-        /* Borde muy fino gris claro */
-        0 1px 3px rgba(0, 0, 0, 0.05);
-    border-radius: 0.3rem;
-    cursor: pointer;
-
-}
-
-.filtro__btn--excel span {
-    font-weight: bold;
-    font-size: var(--font-size-sm);
-}
-
-.filtro__btn--excel:hover {
-    background-color: var(--color-secondary);
-}

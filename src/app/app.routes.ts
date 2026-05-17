@@ -11,11 +11,39 @@ import { AsistenciaComponent } from './pages/asistencia/asistencia.component';
 
 export const routes: Routes = [
     { path: '', component: InicioComponent },
-    { path: 'estudiantes', component: EstudiantesComponent },
-    { path: 'cursos', component: CursosComponent },
-    { path: 'pagos', component: PagosComponent },
-    { path: 'asistencias', component: AsistenciaComponent },
-    { path: 'auxiliar', component: AuxiliarComponent },
-    { path: 'configuracion', component: ConfiguracionComponent },
-    { path: 'estado-cuenta/:dni', component: CuentaEstudianteComponent },
+    {
+        path: 'estudiantes',
+        loadComponent: () =>
+            import('./pages/estudiantes/estudiantes.component')
+                .then(m => m.EstudiantesComponent)
+    },
+    { path: 'cursos', 
+        loadComponent:()=>
+            import('./pages/cursos/cursos.component')
+                    .then(m=>m.CursosComponent)
+     },
+    { path: 'pagos', 
+        loadComponent:()=>
+            import('./pages/pagos/pagos.component')
+                    .then(m=>m.PagosComponent)
+     },
+    { path: 'asistencias', 
+        loadComponent:()=>
+        import('./pages/asistencia/asistencia.component')
+                .then(m=>m.AsistenciaComponent) },
+    { path: 'auxiliar',
+        loadComponent:()=>
+            import('./pages/auxiliar/auxiliar.component')
+                    .then(m=>m.AuxiliarComponent)
+     },
+    { path: 'configuracion',
+        loadComponent:()=>
+            import('./pages/configuracion/configuracion.component')
+                    .then(m=>m.ConfiguracionComponent)
+     },
+    { path: 'estado-cuenta/:dni', 
+        loadComponent:()=>
+            import('./pages/cuenta-estudiante/cuenta-estudiante.component')
+                    .then(m=>m.CuentaEstudianteComponent)
+    },
 ];
