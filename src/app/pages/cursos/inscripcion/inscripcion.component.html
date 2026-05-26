@@ -47,15 +47,29 @@
                         }
                     </mat-form-field>
                 </div>
-                <mat-form-field class="group__field">
-                    <mat-label>Fecha de inscripcion</mat-label>
-                    <input matInput [matDatepicker]="datepicker" formControlName="fechadeinscripcion" required>
-                    <mat-datepicker #datepicker />
-                    <mat-datepicker-toggle [for]="datepicker" matSuffix />
-                    @if (inscripcionForm.get('fechadeinscripcion')?.hasError('required')) {
-                    <mat-error>Campo obligatorio</mat-error>
-                    }
-                </mat-form-field>
+                <div class="group__field">
+                    <mat-form-field class="form-inscripcion__field right">
+                        <mat-label>Monto curso</mat-label>
+                        <input type="number"  matInput formControlName="montoinscripcion" required="required" />
+                        @if (inscripcionForm.get('montoinscripcion')?.hasError('required')) {
+                        <mat-error>Campo obligatorio</mat-error>
+                        }
+                        @if (inscripcionForm.get('montoinscripcion')?.hasError('pattern')) {
+                        <mat-error>El importe debe ser mayor a 0</mat-error>
+                        }
+                    </mat-form-field>
+                    <mat-form-field class="form-inscripcion__field left">
+                        <mat-label>Monto</mat-label>
+                        <input matInput [matDatepicker]="datepicker" formControlName="fechadeinscripcion" required>
+                        <mat-datepicker #datepicker />
+                        <mat-datepicker-toggle [for]="datepicker" matSuffix />
+                        @if (inscripcionForm.get('fechadeinscripcion')?.hasError('required')) {
+                        <mat-error>Campo obligatorio</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+
+
                 @if (cargando) {
                 <div class="loading-spinner">
                     <div class="spinner"></div>

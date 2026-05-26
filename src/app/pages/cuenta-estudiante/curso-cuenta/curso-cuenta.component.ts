@@ -86,8 +86,11 @@ export class CursoCuentaComponent implements OnInit, OnChanges, OnDestroy {
       data: curso
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log("Datos recibidos desde dialog", result);
-      this.procesarpago(result);
+      if(result){
+
+        console.log("Datos recibidos desde dialog", result);
+        this.procesarpago(result);
+      }
     })
 
   }

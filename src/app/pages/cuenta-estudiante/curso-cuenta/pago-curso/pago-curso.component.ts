@@ -36,7 +36,7 @@ export class PagoCursoComponent implements OnInit {
     this.pagoCursoForm = this.fb.group({
       numeroserie: ['', [Validators.required, Validators.maxLength(10), Validadores.sinEspacios]],
       fechapago: [new Date(), [Validators.required]],
-      montototal: [this.data.costoCurso, [Validators.required]],
+      montototal: [this.data.montoinscripcion, [Validators.required]],
       idmetodosdepago: [null, [Validators.required]],
       observaciones: [null],
       idinscripcion: [this.data.idinscripcion, [Validators.required]],
@@ -58,9 +58,7 @@ export class PagoCursoComponent implements OnInit {
     }
 
   }
-  // asignarDatosdeCurso(){
-  //   if(this._dialogRef.)
-  // }
+  
 
 
 

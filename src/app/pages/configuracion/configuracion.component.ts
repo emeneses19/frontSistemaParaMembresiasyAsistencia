@@ -40,6 +40,10 @@ export class ConfiguracionComponent  implements OnInit{
 
   }
 
+  obteniendoFecha(){
+    console.log(new Date(), 'La fecha inicial')
+  }
+
   obtenerConfiguracion(){
     this._configuracionService.obtnerConfiguracionMembresia().subscribe((configuracion)=>{
       this.configuracion = configuracion;

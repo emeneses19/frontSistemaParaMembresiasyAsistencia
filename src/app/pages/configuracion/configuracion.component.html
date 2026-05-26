@@ -51,6 +51,7 @@
                         <mat-slide-toggle formControlName="activo" color="primary">Activo</mat-slide-toggle>
                     </div>
                     <button [disabled]="configuracionMembresiaFormGroup.invalid" class="form__btn--save">Guardar</button>
+                    <button (click)="obteniendoFecha()">Obtner la fecha</button>
                 </form>
             </div>
         </mat-tab>

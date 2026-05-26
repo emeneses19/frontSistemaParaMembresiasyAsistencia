@@ -73,6 +73,7 @@ export class InscripcionComponent implements OnInit, OnDestroy {
   private initForm(): void {
     this.inscripcionForm = this.fb.group({
       idinscripcion: [this.codigoIncripcion, [Validators.required]],
+      montoinscripcion: [0, [Validators.required]],
       fechadeinscripcion: [new Date(), [Validators.required]],
       estado: ['Activo', [Validators.required]],
       dni: ['', [Validators.required, Validators.pattern('^[0-9]{8}$')]],
@@ -87,6 +88,7 @@ export class InscripcionComponent implements OnInit, OnDestroy {
       this.inscripcionForm.get('idcurso')?.patchValue(this.data.curso.idcurso);
       this.inscripcionForm.get('idcurso')?.disable();
       this.inscripcionForm.get('datosCurso')?.patchValue(`${this.data.curso.nombre}- ${this.data.curso.Periodo?.nombreperiodo} s/ ${this.data.curso.costo}`);
+      this.inscripcionForm.get('montoinscripcion')?.patchValue(this.data.curso.costo);
     }
   }
 
@@ -130,6 +132,7 @@ export class InscripcionComponent implements OnInit, OnDestroy {
       const inscripcionData = this.inscripcionForm.getRawValue();
       const inscripcionPayload: InscripcionCursoModel = {
         idinscripcion: inscripcionData.idinscripcion,
+        montoinscripcion: inscripcionData.montoinscripcion,
         fechadeinscripcion: inscripcionData.fechadeinscripcion,
         estado: inscripcionData.estado,
         dni: inscripcionData.dni,

@@ -3,6 +3,7 @@ export interface ReportCursosEstudianteData {
     nombrePeriodo: string;
     idCurso: number;
     cursoNombre:string;
+    montoinscripcion:string;
     costoCurso:number;
     idinscripcion:string;
     fechadeinscripcion:Date;
